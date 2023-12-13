@@ -1,0 +1,7 @@
+@import "./variables";
+
+@mixin desktop {
+  @media screen {
+    max-width: #{$bp-desktop-lg};
+  }
+}

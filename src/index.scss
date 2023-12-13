@@ -1,3 +1,23 @@
+@font-face {
+  font-family: "Nunito-EB";
+  src: url("./assets/fonts/Nunito-ExtraBold.woff") format("woff");
+}
+
+@font-face {
+  font-family: "Nunito-B";
+  src: url("./assets/fonts/Nunito-SemiBold.woff") format("woff");
+}
+
+@font-face {
+  font-family: "Nunito-R";
+  src: url("./assets/fonts/Nunito-Regular.woff") format("woff");
+}
+
+@font-face {
+  font-family: "NotoKR";
+  src: url("./assets/fonts/NotoSansKR-Light.woff");
+}
+
 html,
 body {
   margin: 0;
