@@ -1,7 +1,13 @@
 @import "./variables";
 
 @mixin desktop {
-  @media screen {
-    max-width: #{$bp-desktop-lg};
+  @media (min-width: #{$bp-desktop}) {
+    @content;
+  }
+}
+
+@mixin notebook {
+  @media (min-width: #{$bp-notebook}) and (max-width: #{$bp-desktop - 1px}) {
+    @content;
   }
 }
