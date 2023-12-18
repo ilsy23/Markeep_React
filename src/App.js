@@ -8,6 +8,7 @@ function App() {
     <div className="App">
       <Header />
       <Routes>
+        <Route path="/" element={<App />} />
         <Route path="/oauth/naver" element={<NaverLogin />} />
       </Routes>
     </div>

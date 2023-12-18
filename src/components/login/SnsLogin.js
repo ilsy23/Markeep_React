@@ -1,9 +1,7 @@
-import React from "react";
+import React, { createContext, useState } from "react";
 import { NAVER_AUTH_URL } from "../../config/naver-config";
 
 const SnsLogin = () => {
-  console.log(NAVER_AUTH_URL);
-
   return (
     <div className="sns-box">
       <button>카카오</button>
