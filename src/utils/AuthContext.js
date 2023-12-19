@@ -26,13 +26,14 @@ export const AuthContextProvider = (props) => {
   };
 
   // 로그인 핸들러
-  const loginHandler = (token, nickName, email) => {
+  const loginHandler = (accessToken, refreshToken, nickname, email) => {
     localStorage.setItem("isLoggedIn", "1");
     //json에 담긴 인증정보를 클라이언트에 보관
     // 1. 로컬 스토리지 - 브라우저가 종료되어도 보관됨.
     // 2. 세션 스토리지 - 브라우저가 종료되면 사라짐.
-    localStorage.setItem("ACCESS_TOKEN", token);
-    localStorage.setItem("NICKNAME", nickName);
+    localStorage.setItem("ACCESS_TOKEN", accessToken);
+    localStorage.setItem("REFRESH_TOKEN", refreshToken);
+    localStorage.setItem("NICKNAME", nickname);
     localStorage.setItem("USER_EMAIL", email);
     setIsLoggedIn(true);
   };
