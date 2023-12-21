@@ -1,0 +1,16 @@
+@import "./variables";
+
+.wrapper {
+  .nav_box {
+    margin-top: 8rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+  }
+}
+
+.icon {
+  width: 1.5rem;
+  height: 1.5rem;
+  stroke: $blue;
+}
