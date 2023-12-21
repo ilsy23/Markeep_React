@@ -1,4 +1,5 @@
 @import "./variables";
+@import "./mixin";
 
 .wrapper {
   .nav_box {
@@ -10,7 +11,5 @@
 }
 
 .icon {
-  width: 1.5rem;
-  height: 1.5rem;
-  stroke: $blue;
+  @include icon-style;
 }
