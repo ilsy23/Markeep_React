@@ -1,20 +1,39 @@
-import React from "react";
-import styles from "../styles/Header.module.scss";
-import Input from "./Input";
-import { ReactComponent as SearchIcon } from "../assets/icons/search.svg";
-import title from "../assets/icons/title.png";
+import React, { useState } from 'react';
+import styles from '../styles/Header.module.scss';
+import Input from './Input';
+import { ReactComponent as SearchIcon } from '../assets/icons/search.svg';
+import { Link } from 'react-router-dom';
 
 const Header = () => {
+  const [searchInput, setSearchInput] = useState('');
+
+  const getSearchData = (e) => {
+    setSearchInput(e.target.value);
+  };
+
+  const clickSearchHandler = async () => {};
+
   return (
     <div className={styles.wrapper}>
-      <div className={styles.title}>
-        {/* <img src={title} alt="타이틀" /> */}
+      <Link
+        className={styles.title}
+        to={'/'}
+      >
         MarKeep
-      </div>
+      </Link>
       <div className={styles.search}>
         <Input>
-          <div></div>
-          <SearchIcon className={styles.icon} />
+          <input
+            type='text'
+            placeholder='검색어를 입력해 주세요.'
+            onChange={getSearchData}
+          />
+          <div
+            className={styles.icon_box}
+            onClick={clickSearchHandler}
+          >
+            <SearchIcon className={styles.icon} />
+          </div>
         </Input>
       </div>
       <div className={styles.sign_box}>
