@@ -44,11 +44,11 @@
   filter: drop-shadow(0px 0px 4px $color);
 }
 
-@mixin btn($bg: transparent, $size: 16px, $color: $blue, $font: medium) {
+@mixin btn($bg: transparent, $size: 16px, $color: $blue, $font: m) {
   background: $bg;
   border: none;
   border-radius: $radius;
-  font-family: 'Urbanist-' + $font;
+  font-family: 'Urban-' + $font;
   font-size: $size;
   color: $color;
   cursor: pointer;
