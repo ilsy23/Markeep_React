@@ -35,6 +35,22 @@
           display: block;
         }
       }
+
+      .modal {
+        // display: none;
+        position: absolute;
+        top: 0.5rem;
+        left: 3rem;
+        width: 12rem;
+        background: $blue;
+        color: $dark;
+        font-family: Noto-M;
+        border-radius: 4px;
+
+        font-size: 14px;
+        z-index: 3;
+        padding: 0.5rem;
+      }
     }
   }
 }
