@@ -41,11 +41,13 @@ const SearchFolder = () => {
           </div>
         </Input>
       </div>
-      <ul>
-        <li>
-          <Link to={`/detail`}>폴더 이름입니다. 폴더폴더폴더폴더폴더</Link>
-        </li>
-      </ul>
+      <div className={styles.list}>
+        <ul>
+          <li>
+            <Link to={`/detail`}>폴더 이름입니다. 폴더폴더폴더폴더폴더</Link>
+          </li>
+        </ul>
+      </div>
     </>
   );
 };
