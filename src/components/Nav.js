@@ -23,21 +23,21 @@ const Nav = () => {
     //   icon: <DashboardIcon className={styles.icon} />,
     //   link: "/mypage",
     // },
-    {
-      title: "북마크 추가",
-      icon: <PlusIcon className={styles.icon} />,
-      content: <Add />,
-    },
+    // {
+    //   title: "북마크 추가",
+    //   icon: <PlusIcon className={styles.icon} />,
+    //   content: <Add />,
+    // },
     // {
     //   title: "내 폴더",
     //   icon: <FolderIcon className={styles.icon} />,
     //   content: <FolderList />,
     // },
-    // {
-    //   title: "내 정보",
-    //   icon: <UserIcon className={styles.icon} />,
-    //   content: <UserInfo />,
-    // },
+    {
+      title: "내 정보",
+      icon: <UserIcon className={styles.icon} />,
+      content: <UserInfo />,
+    },
   ];
   return (
     <div className={styles.wrapper}>
