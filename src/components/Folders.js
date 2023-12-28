@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "../styles/Folders.module.scss";
-import CardPrivate from "./CardPrivate";
+import CardPrivate from "./card/CardPrivate";
 
 const Folders = () => {
   const folderList = [];
@@ -10,7 +10,18 @@ const Folders = () => {
       id: i,
       title: `Title ${i}`,
       url: "https://i.pinimg.com/564x/3a/fc/8e/3afc8ededa44767865d31be064282c31.jpg",
-      tags: ["태그1", "태그2", "태그3", "태그4", "태그5"],
+      tags: [
+        "태그1",
+        "태그2",
+        "태그3",
+        "태그4",
+        "태그5",
+        "태그1",
+        "태그2",
+        "태그3",
+        "태그4",
+        "태그5",
+      ],
       isPrivate: false,
     };
 

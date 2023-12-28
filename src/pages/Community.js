@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "../styles/Community.module.scss";
-import CardPublic from "../components/CardPublic";
+import CardPublic from "../components/card/CardPublic";
 
 const Community = () => {
   const bookmarkClickHandler = () => {};

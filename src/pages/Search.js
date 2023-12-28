@@ -1,7 +1,7 @@
-import React from 'react';
-import { useParams } from 'react-router-dom';
-import styles from '../styles/Community.module.scss';
-import CardPublic from '../components/CardPublic';
+import React from "react";
+import { useParams } from "react-router-dom";
+import styles from "../styles/Community.module.scss";
+import CardPublic from "../components/card/CardPublic";
 
 const Search = () => {
   // 검색창에서 넘어온 키워드

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate, useOutletContext } from "react-router-dom";
+import { useOutletContext } from "react-router-dom";
 import styles from "../styles/Modify.module.scss";
 import { ReactComponent as Down } from "../assets/icons/down.svg";
 import { ReactComponent as Up } from "../assets/icons/up.svg";
@@ -9,7 +9,6 @@ import Select from "react-select";
 const Modify = () => {
   const folderInfo = useOutletContext();
   const [openIdx, setOpenIdx] = useState([]);
-  const navigate = useNavigate();
   const { id, url, title, tags, ref } = folderInfo;
 
   const sites = [];
@@ -25,9 +24,7 @@ const Modify = () => {
     sites.push(s);
   }
 
-  const clickModifyHandler = () => {
-    navigate("/mypage/folders/modify");
-  };
+  const clickSaveHandler = () => {};
   const clickDownHandler = (e) => {
     const idx = parseInt(e.currentTarget.id, 10);
     setOpenIdx([...openIdx, idx]);
@@ -57,7 +54,6 @@ const Modify = () => {
           components={{
             DropdownIndicator: () => null,
             IndicatorSeparator: () => null,
-            MultiValueRemove: () => null,
           }}
         />
 
@@ -98,7 +94,7 @@ const Modify = () => {
           );
         })}
       </div>
-      <button onClick={clickModifyHandler}>수정</button>
+      <button onClick={clickSaveHandler}>저장</button>
     </div>
   );
 };
