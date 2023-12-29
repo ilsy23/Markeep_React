@@ -6,10 +6,10 @@ import { ReactComponent as FolderIcon } from "../assets/icons/folder.svg";
 import { ReactComponent as UserIcon } from "../assets/icons/user.svg";
 import { Link } from "react-router-dom";
 import styles from "../styles/Nav.module.scss";
-import SearchFolder from "./nav-components/SearchFolder";
-import Add from "./nav-components/Add";
-import FolderList from "./nav-components/FolderList";
-import UserInfo from "./nav-components/UserInfo";
+import SearchFolder from "./nav/SearchFolder";
+import Add from "./nav/Add";
+import FolderList from "./nav/FolderList";
+import UserInfo from "./nav/UserInfo";
 
 const Nav = () => {
   const [active, setActive] = useState("");
