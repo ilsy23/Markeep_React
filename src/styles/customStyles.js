@@ -9,7 +9,7 @@ const colors = {
   yellow: "#ebfc87",
 };
 
-export const toDataList = (tags) => {
+export const toData = (tags) => {
   const colorList = [
     "#ebfc87",
     "#ed84f8",

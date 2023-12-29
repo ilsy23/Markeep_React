@@ -1,19 +1,19 @@
 import React, { useState } from "react";
 import { useNavigate, useOutletContext } from "react-router-dom";
-import styles from "../styles/Modify.module.scss";
+import styles from "../styles/Detail.module.scss";
 import { ReactComponent as Down } from "../assets/icons/down.svg";
 import { ReactComponent as Up } from "../assets/icons/up.svg";
-import { multiStyles, toDataList } from "../styles/customStyles";
+import { multiStyles, toData } from "../styles/customStyles";
 import Select from "react-select";
 
-const Modify = () => {
+const Detail = () => {
   const folderInfo = useOutletContext();
   const [openIdx, setOpenIdx] = useState([]);
   const navigate = useNavigate();
   const { id, url, title, tags, ref } = folderInfo;
 
   const sites = [];
-  const tagList = toDataList(tags);
+  const tagList = toData(tags);
 
   for (let i = 0; i < 10; i++) {
     const s = {
@@ -103,4 +103,4 @@ const Modify = () => {
   );
 };
 
-export default Modify;
+export default Detail;

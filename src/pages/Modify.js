@@ -3,16 +3,28 @@ import { useOutletContext } from "react-router-dom";
 import styles from "../styles/Modify.module.scss";
 import { ReactComponent as Down } from "../assets/icons/down.svg";
 import { ReactComponent as Up } from "../assets/icons/up.svg";
-import { multiStyles, toDataList } from "../styles/customStyles";
+import { ReactComponent as Cancel } from "../assets/icons/x-circle.svg";
+import { ReactComponent as Add } from "../assets/icons/plus.svg";
+import { multiStyles, toData } from "../styles/customStyles";
 import Select from "react-select";
+import { useInput } from "../hoc/useInput";
 
 const Modify = () => {
   const folderInfo = useOutletContext();
   const [openIdx, setOpenIdx] = useState([]);
   const { id, url, title, tags, ref } = folderInfo;
+  const tagList = toData(tags);
+  const [selectedTags, setSelectedTags] = useState(tagList);
+
+  // 태그 입력 관리
+  const clickAddHandler = () => {
+    const tag = toData([keyword]);
+    setSelectedTags([...selectedTags, tag]);
+  };
+  const [inputRef, keyword, getText, clickCancelHandler, keyDownHandler] =
+    useInput("", clickAddHandler);
 
   const sites = [];
-  const tagList = toDataList(tags);
 
   for (let i = 0; i < 10; i++) {
     const s = {
@@ -35,6 +47,9 @@ const Modify = () => {
       setOpenIdx(openIdx.filter((f) => f !== idx));
     }
   };
+  const changeTagHandler = (selected) => {
+    setSelectedTags(selected);
+  };
 
   return (
     <div className={styles.wrap} ref={ref}>
@@ -43,14 +58,30 @@ const Modify = () => {
         <img src={url} alt="폴더 이미지" />
       </div>
       <div className={styles.tag_box}>
+        <input
+          placeholder="내 폴더 검색"
+          onChange={getText}
+          value={keyword}
+          onKeyDown={keyDownHandler}
+          ref={inputRef}
+        />
+        {keyword ? (
+          <div className={styles.cancel} onClick={clickCancelHandler}>
+            <Cancel className={styles.icon} />
+          </div>
+        ) : null}
+        <div className={styles.search} onClick={clickAddHandler}>
+          <Add className={styles.icon} />
+        </div>
         <Select
-          defaultValue={tagList}
+          defaultValue={selectedTags}
           isMulti
-          styles={multiStyles(tagList)}
+          styles={multiStyles(selectedTags)}
           isSearchable={false}
           isClearable={false}
           openMenuOnFocus={false}
           openMenuOnClick={false}
+          onChange={changeTagHandler}
           components={{
             DropdownIndicator: () => null,
             IndicatorSeparator: () => null,
