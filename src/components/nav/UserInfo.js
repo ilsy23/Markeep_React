@@ -42,9 +42,6 @@ const UserInfo = () => {
           <Pencil className={styles.icon} />
           <input type="file" id="profile" style={{ display: "none" }} />
         </label>
-        {/* <div className={styles.icon_box}>
-          <Pencil className={styles.icon} />
-        </div> */}
       </div>
       <div>{user.email}</div>
       {!change ? (

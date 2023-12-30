@@ -60,14 +60,6 @@ const Detail = () => {
             MultiValueRemove: () => null,
           }}
         />
-
-        {/* {tags.map((tag, idx) => {
-          return (
-            <div key={idx} className={styles.tag}>
-              {tag}
-            </div>
-          );
-        })} */}
       </div>
       <div className={styles.site_box}>
         {sites.map((s, idx) => {

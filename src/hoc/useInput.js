@@ -8,13 +8,13 @@ export const useInput = (initial, action) => {
     setKeyword(e.target.value);
   };
 
-  const clickCancelHandler = (e) => {
+  const clickCancelHandler = () => {
     setKeyword("");
   };
 
   const keyDownHandler = (e) => {
     if (e.key === "Enter") {
-      action();
+      action(e);
       inputRef.current.blur();
     }
   };

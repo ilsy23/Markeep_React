@@ -25,6 +25,7 @@ const Community = () => {
 
   return (
     <div className={styles.wrapper}>
+      <h2>Community</h2>
       <div className={styles.content}>
         {/* 커뮤니티 북마크 폴더 불러와서 여기에 넣으면 돼요.
         아래 CardPublic은 예시로 넣어놓은 거니까 삭제하세요. */}
