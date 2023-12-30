@@ -13,17 +13,24 @@ const Modify = () => {
   const folderInfo = useOutletContext();
   const [openIdx, setOpenIdx] = useState([]);
   const { id, url, title, tags, ref } = folderInfo;
-  const tagList = toData(tags);
+  const tagList = tags.map((tag, idx) => toData(tag, idx));
   const [selectedTags, setSelectedTags] = useState(tagList);
 
   // 태그 입력 관리
   const clickAddHandler = () => {
-    const tag = toData([keyword]);
+    const tag = toData(keyword, selectedTags.length);
     setSelectedTags([...selectedTags, tag]);
+    clickCancelHandler();
+    inputRef.current.focus();
   };
   const [inputRef, keyword, getText, clickCancelHandler, keyDownHandler] =
     useInput("", clickAddHandler);
 
+  const changeTagHandler = (selected) => {
+    setSelectedTags(selected);
+  };
+
+  // 사이트 배열 불러오기
   const sites = [];
 
   for (let i = 0; i < 10; i++) {
@@ -36,7 +43,9 @@ const Modify = () => {
     sites.push(s);
   }
 
+  // 폴더 수정 사항 저장
   const clickSaveHandler = () => {};
+
   const clickDownHandler = (e) => {
     const idx = parseInt(e.currentTarget.id, 10);
     setOpenIdx([...openIdx, idx]);
@@ -47,9 +56,6 @@ const Modify = () => {
       setOpenIdx(openIdx.filter((f) => f !== idx));
     }
   };
-  const changeTagHandler = (selected) => {
-    setSelectedTags(selected);
-  };
 
   return (
     <div className={styles.wrap} ref={ref}>
@@ -59,7 +65,7 @@ const Modify = () => {
       </div>
       <div className={styles.tag_box}>
         <input
-          placeholder="내 폴더 검색"
+          placeholder="태그 입력"
           onChange={getText}
           value={keyword}
           onKeyDown={keyDownHandler}
@@ -82,6 +88,7 @@ const Modify = () => {
           openMenuOnFocus={false}
           openMenuOnClick={false}
           onChange={changeTagHandler}
+          value={selectedTags}
           components={{
             DropdownIndicator: () => null,
             IndicatorSeparator: () => null,

@@ -9,7 +9,7 @@ const colors = {
   yellow: "#ebfc87",
 };
 
-export const toData = (tags) => {
+export const toData = (tag, idx) => {
   const colorList = [
     "#ebfc87",
     "#ed84f8",
@@ -18,11 +18,7 @@ export const toData = (tags) => {
     "#da96a6",
     "#fcc5b8",
   ];
-
-  return tags.map((tag, idx) => {
-    const color = colorList[idx % 6];
-    return { value: idx, label: tag, color: color };
-  });
+  return { value: idx, label: tag, color: colorList[idx % 6] };
 };
 
 export const multiStyles = (data) => {

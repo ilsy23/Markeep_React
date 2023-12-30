@@ -13,7 +13,7 @@ const Detail = () => {
   const { id, url, title, tags, ref } = folderInfo;
 
   const sites = [];
-  const tagList = toData(tags);
+  const tagList = tags.map((tag, idx) => toData(tag, idx));
 
   for (let i = 0; i < 10; i++) {
     const s = {
