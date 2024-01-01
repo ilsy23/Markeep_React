@@ -1,39 +1,71 @@
-import { Route, Routes } from "react-router-dom";
-import Header from "./components/Header";
-import Nav from "./components/Nav";
-import Community from "./pages/Community";
-import MyPage from "./pages/MyPage";
-import Search from "./pages/Search";
-import Detail from "./pages/Detail";
-import "./styles/App.scss";
-import Folders from "./components/Folders";
-import Finds from "./components/Finds";
-import Modify from "./pages/Modify";
+import { useContext } from 'react';
+import { Route, Routes, useLocation } from 'react-router-dom';
+import AuthContext from './context/AuthContext';
+import Nav from './layouts/nav/Nav';
+import Header from './layouts/Header';
+import Community from './pages/Community';
+import MyPage from './pages/MyPage';
+import Modal from './pages/modal/Modal';
+import Folder from './pages/modal/Folder';
+import MyFolder from './pages/modal/MyFolder';
+import EditFolder from './pages/modal/EditFolder';
+import Search from './pages/Search';
 
 function App() {
+  let location = useLocation();
+  const { isLoggedIn } = useContext(AuthContext);
+
+  let previousLocation = location.state?.previousLocation;
+  console.log('previousLocation: ', previousLocation);
+
   return (
-    <div className="app">
-      <div className="nav">
-        <Nav />
-      </div>
-      <div className="nav-modal"></div>
-      <div className="main-wrapper">
-        <div className="header">
+    <div className='app'>
+      {isLoggedIn && (
+        <div className='nav'>
+          <Nav />
+        </div>
+      )}
+      <div className='main-wrapper'>
+        <div className='header'>
           <Header />
         </div>
-        <div className="content-wrapper">
-          <Routes>
-            <Route exact path="/" element={<Community />} />
-            <Route path="/mypage" element={<MyPage />}>
-              <Route path="folders" element={<Folders />}>
-                <Route path="detail" element={<Detail />} />
-                <Route path="modify" element={<Modify />} />
-              </Route>
-              <Route path="finds" element={<Finds />} />
-            </Route>
-            <Route path="/search/:keyword" element={<Search />} />
-            <Route path="/detail/:folderId" element={<Detail />} />
+        <div className='content-wrapper'>
+          <Routes location={previousLocation || location}>
+            <Route
+              path='/'
+              element={<Community />}
+            />
+            <Route
+              path='/mypage'
+              element={<MyPage />}
+            />
+            <Route
+              path='/:keyword'
+              element={<Search />}
+            />
           </Routes>
+
+          {previousLocation && (
+            <Routes>
+              <Route
+                path='/view'
+                element={<Modal />}
+              >
+                <Route
+                  path='public/folders/:id'
+                  element={<Folder />}
+                />
+                <Route
+                  path='folders/:id'
+                  element={<MyFolder />}
+                />
+                <Route
+                  path='folders/:id/edit'
+                  element={<EditFolder />}
+                />
+              </Route>
+            </Routes>
+          )}
         </div>
       </div>
     </div>

@@ -1,28 +1,25 @@
-import React, { useRef, useState } from 'react';
 import styles from '../styles/Header.module.scss';
-import Input from './Input';
 import { ReactComponent as SearchIcon } from '../assets/icons/search.svg';
 import { Link, useNavigate } from 'react-router-dom';
+import { useInput } from '../hoc/useInput';
+import Input from '../components/ui/Input';
 
 const Header = () => {
-  const [searchInput, setSearchInput] = useState('');
+  // 검색 요청
+  const handleSearchClick = () => {
+    navigate(`/${keyword}`);
+    inputRef.current.blur();
+  };
+
+  const {
+    inputRef,
+    keyword,
+    handleInputChange,
+    // HandleCancelClick,
+    handleKeyDown,
+  } = useInput('', handleSearchClick);
+
   const navigate = useNavigate();
-  const inputRef = useRef();
-
-  const getSearchData = (e) => {
-    setSearchInput(e.target.value);
-  };
-
-  const keyDownHandler = (e) => {
-    if (e.key === 'Enter') {
-      clickSearchHandler();
-      inputRef.current.blur();
-    }
-  };
-
-  const clickSearchHandler = () => {
-    navigate(`/search/${searchInput}`);
-  };
 
   return (
     <div className={styles.wrapper}>
@@ -37,14 +34,14 @@ const Header = () => {
           <input
             type='text'
             placeholder='검색어를 입력해 주세요.'
-            value={searchInput}
-            onChange={getSearchData}
-            onKeyDown={keyDownHandler}
+            value={keyword}
+            onChange={handleInputChange}
+            onKeyDown={handleKeyDown}
             ref={inputRef}
           />
           <div
             className={styles.icon_box}
-            onClick={clickSearchHandler}
+            onClick={handleSearchClick}
           >
             <SearchIcon className={styles.icon} />
           </div>

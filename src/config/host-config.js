@@ -2,13 +2,16 @@
 const clientHostName = window.location.hostname;
 let backEndHostName; // 백엔드 서버 호스트 이름
 
-if (clientHostName === "localhost") {
+if (clientHostName === 'localhost') {
   // 개발 중
-  backEndHostName = "http://localhost:8181";
-} else if (clientHostName === "spring.com") {
+  backEndHostName = 'http://localhost:8181';
+} else if (clientHostName === 'spring.com') {
   // 배포해서 서비스 중
-  backEndHostName = "http://api.spring.com";
+  backEndHostName = 'http://api.spring.com';
 }
 
 export const API_BASE_URL = backEndHostName;
-export const USER = "/user";
+export const USER = API_BASE_URL + '/user';
+export const FOLDER = API_BASE_URL + '/folders';
+export const SITE = API_BASE_URL + '/site';
+export const FOLLOW = API_BASE_URL + '/follow';
