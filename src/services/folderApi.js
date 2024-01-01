@@ -1,80 +1,68 @@
 import { FOLDER, SITE, USER } from '../config/host-config';
 
-async function useFetch() {
-  const token = localStorage.getItem('ACCESS_TOKEN');
-  const requestTokenHeader = {
-    'content-type': 'application/json',
-    Authorization: 'Bearer ' + token,
-  };
-  const requestHeader = {
-    'content-type': 'application/json',
-  };
+const token = localStorage.getItem('ACCESS_TOKEN');
+const requestTokenHeader = {
+  'content-type': 'application/json',
+  Authorization: 'Bearer ' + token,
+};
+const requestHeader = {
+  'content-type': 'application/json',
+};
 
-  // 폴더 목록 가져오기
-  async function getFolders(pageNo, size, keyword) {
-    console.log('getFolders 함수 호출');
+// 폴더 목록 가져오기
+export async function getFolders(pageNo, size, keyword) {
+  console.log('getFolders 함수 호출');
 
-    console.log(
-      'url: ',
-      `${FOLDER}/all?page=${pageNo}&size=${size}&keyword=${keyword}`
-    );
-    const res = await fetch(
-      `${FOLDER}/all?page=${pageNo}&size=${size}&keyword=${keyword}`
-    );
-    const data = await res.json();
-    console.log('폴더 목록 요청 확인: ', res);
-    return data;
-  }
-
-  // 내 폴더 목록 가져오기
-  async function getMyFolders() {
-    console.log('AuthContext 요청 들어옴!');
-
-    const res = await fetch(FOLDER + '/my', {
-      headers: requestTokenHeader,
-    });
-    return await res.json();
-  }
-
-  // 사이트 추가
-  async function addSite(folderId, title, url, comment) {
-    const res = await fetch(SITE, {
-      method: 'POST',
-      headers: requestTokenHeader,
-      body: JSON.stringify({
-        folderId: folderId,
-        siteName: title,
-        url: url,
-        comment: comment,
-      }),
-    });
-    console.log('title -> ', title);
-    console.log('url -> ', url);
-    console.log('folderId -> ', folderId);
-    console.log('comment -> ', comment);
-
-    if (res.status === 200) {
-      alert('성공적으로 등록되었습니다!');
-    } else if (res.status === 400) {
-      alert('입력 값을 다시 한번 확인해주십시오!');
-    } else {
-      alert('등록에 실패했습니다. markeepMG@gmail.com으로 문의주세요');
-    }
-  }
-
-  // 프로필 조회
-  async function getProfile() {
-    const res = await fetch(USER + '/profile', {
-      headers: requestTokenHeader,
-    });
-    const { nickname, email, profileImage, followerCount, followingCount } =
-      await res.json();
-  }
-
-  return { getFolders, getMyFolders, addSite };
+  const res = await fetch(
+    `${FOLDER}/all?page=${pageNo}&size=${size}&keyword=${keyword}`
+  );
+  return await res.json();
 }
 
-export default useFetch;
+// 내 폴더 목록 가져오기
+export async function getMyFolders() {
+  console.log('getMyFolders 함수 호출!');
+
+  const res = await fetch(FOLDER + '/my', {
+    headers: requestTokenHeader,
+  });
+  const folders = res.json();
+  console.log('folders: ', folders);
+  const list = folders.list;
+  const page = folders.pageInfo;
+  const count = folders.count;
+  return { list, page, count };
+}
+
+// 사이트 추가
+export async function addSite(folderId, title, url, comment) {
+  const res = await fetch(SITE, {
+    method: 'POST',
+    headers: requestTokenHeader,
+    body: JSON.stringify({
+      folderId: folderId,
+      siteName: title,
+      url: url,
+      comment: comment,
+    }),
+  });
+
+  if (res.status === 200) {
+    alert('성공적으로 등록되었습니다!');
+  } else if (res.status === 400) {
+    alert('입력 값을 다시 한번 확인해주십시오!');
+  } else {
+    alert('등록에 실패했습니다. markeepMG@gmail.com으로 문의주세요');
+  }
+}
+
+// 프로필 조회
+export async function getProfile() {
+  const res = await fetch(USER + '/profile', {
+    headers: requestTokenHeader,
+  });
+  return await res.json();
+}
 
 /*
 요청 모음
