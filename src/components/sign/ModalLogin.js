@@ -18,23 +18,16 @@ import { useNavigate } from 'react-router-dom';
 import AuthContext from '../../context/AuthContext';
 import { useContext } from 'react';
 import { USER } from '../../config/host-config';
+import { KAKAO_AUTH_URL } from '../../config/kakao-config';
+import { NAVER_AUTH_URL } from '../../config/naver-config';
+import GoogleLoginBtn from '../sns-login/GoogleLoginBtn';
 
-const ModalLogin = ({
-  // onLoginSuccess,
-  setValue,
-  handleClose,
-}) => {
+const ModalLogin = ({ handleChange, setValue, setShowForgotPassword }) => {
   const redirection = useNavigate();
 
   const { onLogin } = useContext(AuthContext);
 
-  const token = localStorage.getItem('ACCESS_TOKEN');
-
   const REQUEST_URL = USER + '/login';
-
-  const tabChangeHandler = () => {
-    setValue('signUp');
-  };
 
   // 서버에 비동기 로그인 요청(AJAX 요청)
   const fetchLogin = async () => {
@@ -65,7 +58,7 @@ const ModalLogin = ({
 
     const res = await fetch(REQUEST_URL, {
       method: 'POST',
-      headers: { 'Content-type': 'application/json' },
+      headers: { 'content-type': 'apllication/json' },
       body: JSON.stringify({
         email: $email.value,
         password: $password.value,
@@ -79,21 +72,13 @@ const ModalLogin = ({
       return;
     }
 
-    const { accessToken, nickname, email, refreshToken } = await res.json(); // 서버에서 온 json 읽기
+    const { token, userName, email, role } = await res.json(); // 서버에서 온 json 읽기
 
     // Context API를 사용하여 로그인 상태를 업데이트 합니다.
-    onLogin(accessToken, nickname, email, refreshToken);
-    console.log(
-      '여기는 fetch쪽에 있는 로그인 리디렉션 없앴음 이거 다음이 로긴핸들임 res.json(): ',
-      accessToken,
-      nickname,
-      email,
-      refreshToken
-    );
-    // onLoginSuccess();
+    onLogin(token, userName, role);
+
     // 홈으로 리다이렉트
     redirection('/');
-    handleClose();
   };
 
   // 로그인 요청 핸들러
@@ -102,15 +87,15 @@ const ModalLogin = ({
 
     // 서버에 로그인 요청 전송
     fetchLogin();
-    console.log('이건 loginHandler이고, 리디렉션전임!');
-    // onLoginSuccess();
-    // redirection('/'); 여기 안해도 될듯
   };
 
   // forgot password 클릭시 이동
-  const fpClickHandler = () => {
-    redirection('/');
-    console.log('go!');
+  const fpClickHandler = (event) => {
+    // event.preventDefault();
+    // if (value !== 'passowrd') {
+    //   setValue('password');
+    //   setShowForgotPassword(true);
+    // }
   };
 
   return (
@@ -122,7 +107,7 @@ const ModalLogin = ({
       >
         <Grid
           container
-          spacing={2}
+          spacing={0}
         >
           <Grid
             item
@@ -145,6 +130,7 @@ const ModalLogin = ({
                   border: '1px solid #363636',
                   color: 'lightgray',
                   width: '80%',
+                  height: '45px',
                   margin: 'auto',
                   borderRadius: '20px',
                 },
@@ -168,7 +154,6 @@ const ModalLogin = ({
               type='password'
               variant='outlined'
               fullWidth
-              margin='normal'
               placeholder='Password'
               InputProps={{
                 startAdornment: (
@@ -180,6 +165,7 @@ const ModalLogin = ({
                   border: '1px solid #363636',
                   color: 'lightgray',
                   width: '80%',
+                  height: '45px',
                   margin: 'auto',
                   borderRadius: '20px',
                 },
@@ -203,7 +189,7 @@ const ModalLogin = ({
               sx={{
                 color: 'gray', // 체크되지 않았을 때의 색상
                 borderRadius: '50%',
-                marginLeft: '4em',
+                marginLeft: '3em',
                 '&.Mui-checked': {
                   color: 'lightGray', // 체크됐을 때의 색상
                 },
@@ -214,7 +200,7 @@ const ModalLogin = ({
           sx={{
             '& .MuiTypography-body1': {
               // MUI v5 기준 Typography 스타일 클래스
-              fontSize: '0.875rem', // 폰트 크기 조정
+              fontSize: '0.780rem', // 폰트 크기 조정
               color: 'lightGray', // 폰트 색상 조정
             },
           }}
@@ -228,7 +214,7 @@ const ModalLogin = ({
               sx={{
                 color: 'gray', // 체크되지 않았을 때의 색상
                 borderRadius: '50%',
-                marginLeft: '4em',
+                marginLeft: '6em',
                 '&.Mui-checked': {
                   color: 'lightGray', // 체크됐을 때의 색상
                 },
@@ -239,7 +225,7 @@ const ModalLogin = ({
           sx={{
             '& .MuiTypography-body1': {
               // MUI v5 기준 Typography 스타일 클래스
-              fontSize: '0.875rem', // 폰트 크기 조정
+              fontSize: '0.770rem', // 폰트 크기 조정
               color: 'lightGray', // 폰트 색상 조정
             },
           }}
@@ -248,7 +234,7 @@ const ModalLogin = ({
           href='#'
           color={'lightGray'}
           underline='hover'
-          sx={{ marginLeft: '3em' }}
+          sx={{ marginLeft: '10em', fontSize: '0.880rem' }}
           onClick={fpClickHandler}
         >
           Forgot Password?
@@ -257,23 +243,23 @@ const ModalLogin = ({
           variant='contained'
           color='primary'
           fullWidth
-          sx={{ width: '50%', borderRadius: '30px', margin: '1em 10em' }}
+          sx={{ width: '33%', borderRadius: '30px', margin: '1em 9.5em' }}
           type='submit'
         >
           Sign In
         </Button>
       </form>
-      <Box sx={{ margin: '2em' }}>
+      <Box sx={{ margin: '1.5em' }}>
         <Typography
-          variant='h6'
+          variant='h10'
           align='center'
+          margin='36px'
         >
-          Don't have an account?
+          Don't have an account?{' '}
           <Link
             href='#'
             color={'lightGray'}
             underline='hover'
-            onClick={tabChangeHandler}
           >
             Sign Up Now!
           </Link>
@@ -287,28 +273,28 @@ const ModalLogin = ({
       </Divider>
       <Box
         sx={{
-          width: '40%',
-          margin: '1em auto 3em',
+          width: '50%',
+          margin: '2em auto 2em',
           display: 'flex',
           flexGrow: 1,
           justifyContent: 'space-around',
         }}
       >
-        <img
-          src={require('../assets/img/kakao.png')}
-          alt='kakao'
-          className='sns-login-icon'
-        />
-        <img
-          src={require('../assets/img/naver_icon.png')}
-          alt='kakao'
-          className='sns-login-icon'
-        />
-        <img
-          src={require('../assets/img/google_icon.png')}
-          alt='kakao'
-          className='sns-login-icon'
-        />
+        <a href={KAKAO_AUTH_URL}>
+          <img
+            src={require('../../assets/imgs/kakao.png')}
+            alt='kakao'
+            className='sns-login-icon'
+          />
+        </a>
+        <a href={NAVER_AUTH_URL}>
+          <img
+            src={require('../../assets/imgs/naver_icon.png')}
+            alt='naver'
+            className='sns-login-icon'
+          />
+        </a>
+        <GoogleLoginBtn />
       </Box>
     </div>
   );

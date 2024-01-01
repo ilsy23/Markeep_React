@@ -11,13 +11,19 @@ async function useFetch() {
   };
 
   // 폴더 목록 가져오기
-  async function getFolders(pageNo, size, keyword = '') {
+  async function getFolders(pageNo, size, keyword) {
+    console.log('getFolders 함수 호출');
+
+    console.log(
+      'url: ',
+      `${FOLDER}/all?page=${pageNo}&size=${size}&keyword=${keyword}`
+    );
     const res = await fetch(
       `${FOLDER}/all?page=${pageNo}&size=${size}&keyword=${keyword}`
     );
-
+    const data = await res.json();
     console.log('폴더 목록 요청 확인: ', res);
-    return await res.json();
+    return data;
   }
 
   // 내 폴더 목록 가져오기
@@ -65,11 +71,7 @@ async function useFetch() {
       await res.json();
   }
 
-  return {
-    getFolders: getFolders,
-    getMyFolders: getMyFolders,
-    addSite: addSite,
-  };
+  return { getFolders, getMyFolders, addSite };
 }
 
 export default useFetch;

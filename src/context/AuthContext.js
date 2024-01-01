@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { API_BASE_URL, FOLDER, USER } from '../config/host-config';
+import { USER } from '../config/host-config';
 
 const AuthContext = React.createContext({
   isLoggedIn: false,
@@ -28,7 +28,7 @@ export const AuthContextProvider = (props) => {
         // JWT에 대한 인증 토큰이라는 타입을 선언
         Authorization: 'Bearer ' + localStorage.getItem('ACCESS_TOKEN'),
       };
-      const res = await fetch(API_BASE_URL + USER + '/status', {
+      const res = await fetch(USER + '/status', {
         method: 'GET',
         headers: requestHeader,
       });

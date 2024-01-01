@@ -10,6 +10,7 @@ import Folder from './pages/modal/Folder';
 import MyFolder from './pages/modal/MyFolder';
 import EditFolder from './pages/modal/EditFolder';
 import Search from './pages/Search';
+import './styles/App.scss';
 
 function App() {
   let location = useLocation();
