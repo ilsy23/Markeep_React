@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import './SignModal.scss';
+import '../../styles/SignModal.scss';
 import {
   Dialog,
   Tabs,
@@ -22,9 +22,9 @@ import ModalLogin from './ModalLogin';
 import ModalJoin from './ModalJoin';
 
 const SignModal = ({ status, handleClose }) => {
-  console.log('status: ', status);
+  // console.log('status: ', status);
   const [value, setValue] = useState('signIn');
-  console.log('useState value: ', value);
+  // console.log('useState value: ', value);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);

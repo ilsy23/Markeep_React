@@ -1,15 +1,17 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import useFetch from '../hoc/useFetch';
 import CardPublic from '../components/folder/CardPublic';
 import styles from '../styles/Community.module.scss';
+import { FOLDER } from '../config/host-config';
 
 const Search = () => {
   const bookmarkClickHandler = () => {};
   const followClickHandler = () => {};
 
   const { keyword } = useParams(); // 검색창에서 넘어온 키워드
-  const { getFolders } = useFetch(); // 폴더 요청
+  console.log('keyword', keyword);
+  // const { getFolders } = useFetch(); // 폴더 요청
+  // console.log('getFolders', getFolders);
 
   const [folders, setFolders] = useState(null);
 
@@ -17,10 +19,18 @@ const Search = () => {
   const size = 10;
 
   useEffect(() => {
-    getFolders(pageNo, size, keyword).then((res) => setFolders(res));
-  }, [getFolders, keyword]);
+    const fetchFolders = async () => {
+      const res = await fetch(
+        `${FOLDER}/all?page=${pageNo}&size=${size}&keyword=${keyword}`
+      );
+      const data = await res.json();
+      console.log('폴더 목록 요청 확인: ', data);
+      setFolders(data.list);
+    };
+    fetchFolders();
+  }, [keyword]);
 
-  const folderList = folders.list;
+  const folderList = folders?.list;
 
   return (
     <div className={styles.wrapper}>

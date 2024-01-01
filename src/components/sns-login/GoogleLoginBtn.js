@@ -22,6 +22,9 @@ const GoogleLoginBtn = () => {
           onFailure={(err) => {
             console.log(err);
           }}
+          shape='circle'
+          type='icon'
+          style={{ width: '50px' }}
         />
       </GoogleOAuthProvider>
     </>
