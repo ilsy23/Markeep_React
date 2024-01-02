@@ -1,11 +1,16 @@
 import styles from "../../styles/CardPrivate.module.scss";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
-const CardPrivate = ({ id, url, title, tags }) => {
+const CardPrivate = ({ id, data, url, title, tags }) => {
+  const location = useLocation();
+
   return (
     <div>
       <div className={styles.wrap}>
-        <Link to={`/view/folders${id}`}>
+        <Link
+          to={`/view/folders/${id}`}
+          state={{ previousLocation: location, data: data }}
+        >
           <div className={styles.image_box}>
             <img src={url} alt="폴더 이미지" />
           </div>

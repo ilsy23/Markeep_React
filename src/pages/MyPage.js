@@ -75,7 +75,7 @@ const MyPage = () => {
         </div>
       </div>
       <div className={styles.content}>
-        <Folders private={isPrivate} />
+        <Folders isPrivate={isPrivate} />
       </div>
     </div>
   );

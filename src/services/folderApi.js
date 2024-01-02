@@ -9,14 +9,13 @@ const requestHeader = {
   "content-type": "application/json",
 };
 
-// 폴더 목록 가져오기
+// 폴더 목록 요청
 export async function getFolders(pageNo, size, keyword) {
   console.log("getFolders 함수 호출");
 
   const res = await fetch(
     `${FOLDER}/all?page=${pageNo}&size=${size}&keyword=${keyword}`
   );
-  // return res.json();
   const folders = await res.json();
   const list = await folders.list;
   const page = await folders.pageInfo;
@@ -24,11 +23,22 @@ export async function getFolders(pageNo, size, keyword) {
   return { list, page, count };
 }
 
-// 내 폴더 목록 가져오기
+// 내 폴더 목록 요청
 export async function getMyFolders() {
   console.log("getMyFolders 함수 호출!");
 
   const res = await fetch(FOLDER + "/my", {
+    headers: requestTokenHeader,
+  });
+  const folders = await res.json();
+  return await folders.map((f) => f.folder);
+}
+
+// 사이트 목록 요청
+export async function getSites(id) {
+  console.log("getSites 함수 호출!");
+
+  const res = await fetch(`${SITE}?folderId=${id}`, {
     headers: requestTokenHeader,
   });
   return await res.json();
