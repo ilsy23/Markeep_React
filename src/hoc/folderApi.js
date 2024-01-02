@@ -26,10 +26,10 @@ export async function getFolders(pageNo, size, keyword) {
 // 내 폴더 목록 요청
 export async function getMyFolders() {
   console.log("getMyFolders 함수 호출!");
-  const res = await fetch(`${FOLDER}/my`, {
+
+  const res = await fetch(FOLDER + "/my", {
     headers: requestTokenHeader,
   });
-  console.log("folders: ", await res);
   const folders = await res.json();
   return await folders.map((f) => f.folder);
 }
@@ -46,7 +46,6 @@ export async function getSites(id) {
 
 // 사이트 추가
 export async function addSite(folderId, title, url, comment) {
-  console.log("addSite 함수 호출!");
   const res = await fetch(SITE, {
     method: "POST",
     headers: requestTokenHeader,
@@ -58,7 +57,13 @@ export async function addSite(folderId, title, url, comment) {
     }),
   });
 
-  return res.status;
+  if (res.status === 200) {
+    alert("성공적으로 등록되었습니다!");
+  } else if (res.status === 400) {
+    alert("입력 값을 다시 한번 확인해주십시오!");
+  } else {
+    alert("등록에 실패했습니다. markeepMG@gmail.com으로 문의주세요");
+  }
 }
 
 // 프로필 조회
@@ -116,9 +121,38 @@ const fetchMySiteList = async () => {
     // list.map(())
     setSites(list);
   };
+13. pages>Search.js
+목적: 어,, 헤더검색창에서,,,인건가? 싶은데 아무내용이 안써져있음 이거 안쓰나
+const fetchFolderList = async () => {
+    const res = await fetch(
+      requestUri +
+        '/all?page=' +
+        `${pageNo}` +
+        '&size=' +
+        `${size}` +
+        '&keyword=' +
+        `${keyword}`
+    );
 
+    const { list } = await res.json();
+    // 응답데이터에 핀 수 추가 요망.
+    console.log('list: ', list);
 
+    setList(list);
+  };
+14. pages>SearchDetail.js
+목적: 사이트 목록 조회 요청 / 이거 모달창에서 사이트 일자로 목록 주르륵 뜨는거 표현할 요청인듯
+const fetchMySiteList = async () => {
+    const res = await fetch(requestUri + '?folderId=' + folderId, {
+      headers: { Authorization: 'Bearer ' + token },
+    });
+    console.log(res);
 
+    const list = await res.json();
+    console.log('lists: ', list);
+    // list.map(())
+    setSites(list);
+  };
 15. utils>AuthContext.js
 목적: 토큰 값이 유효한지 서버에 찔러보는 함수
 const testFunction = async () => {

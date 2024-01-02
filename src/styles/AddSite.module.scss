@@ -1,4 +1,4 @@
-@import 'variables', 'mixin';
+@import "variables", "mixin";
 
 .wrapper {
   display: flex;
@@ -22,6 +22,11 @@
     .icon {
       @include icon(1rem, $blue04);
     }
+
+    &.activeButton {
+      @include border($s: $salmon, $e: $purple);
+      color: $purple;
+    }
   }
 }
 
@@ -36,7 +41,7 @@
     margin-top: 1px;
     border: 2px solid $blue04;
     border-radius: 4px;
-    font-family: 'Noto-l';
+    font-family: "Noto-l";
     background: $black;
 
     &::placeholder {

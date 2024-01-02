@@ -13,7 +13,7 @@ const MyFolder = () => {
   const previousLocation = location.state.previousLocation;
   const folder = location.state.data;
 
-  // 태그 변환 로직
+  // 태그를 Select 객체로 변환
   const [openIdx, setOpenIdx] = useState([]);
   const { id, folderImg: url, title, tagNames: tags } = folder;
   const tagList = tags.map((tag, idx) => toData(tag, idx));
@@ -55,6 +55,7 @@ const MyFolder = () => {
           isClearable={false}
           openMenuOnFocus={false}
           openMenuOnClick={false}
+          placeholder={"No Tags..."}
           components={{
             DropdownIndicator: () => null,
             IndicatorSeparator: () => null,
