@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import styles from "../../styles/Folders.module.scss";
 import { getMyFolders } from "../../services/folderApi";
 import CardPrivate from "./CardPrivate";
+import Loading from "../ui/Loading";
 
 const Folders = ({ isPrivate }) => {
   const [folders, setFolders] = useState();
@@ -11,7 +12,7 @@ const Folders = ({ isPrivate }) => {
   }, []);
 
   if (!folders) {
-    return <div></div>;
+    return <Loading />;
   }
   console.log("folders: ", folders);
 

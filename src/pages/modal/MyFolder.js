@@ -6,14 +6,15 @@ import { ReactComponent as Down } from "../../assets/icons/down.svg";
 import { multiStyles, toData } from "../../styles/customStyles";
 import { useEffect, useState } from "react";
 import { getSites } from "../../services/folderApi";
+import Loading from "../../components/ui/Loading";
 
 const MyFolder = () => {
   const location = useLocation();
+  const previousLocation = location.state.previousLocation;
   const folder = location.state.data;
 
   // 태그 변환 로직
   const [openIdx, setOpenIdx] = useState([]);
-  //const navigate = useNavigate();
   const { id, folderImg: url, title, tagNames: tags } = folder;
   const tagList = tags.map((tag, idx) => toData(tag, idx));
 
@@ -24,7 +25,7 @@ const MyFolder = () => {
   }, [id]);
 
   if (!sites) {
-    return <div></div>;
+    return <Loading />;
   }
 
   // 코멘트 토글 로직
@@ -92,7 +93,7 @@ const MyFolder = () => {
       </div>
       <Link
         to={`/view/folders/${id}/edit`}
-        state={{ previousLocation: location, data: { folder, sites } }}
+        state={{ previousLocation: previousLocation, data: { folder, sites } }}
       >
         수정
       </Link>
