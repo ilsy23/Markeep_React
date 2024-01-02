@@ -4,16 +4,16 @@ import { getMyFolders } from "../../services/folderApi";
 import CardPrivate from "./CardPrivate";
 
 const Folders = ({ isPrivate }) => {
-  const [folderInfo, setFolderInfo] = useState();
+  const [folders, setFolders] = useState();
 
   useEffect(() => {
-    getMyFolders().then((res) => setFolderInfo(res));
+    getMyFolders().then((res) => setFolders(res));
   }, []);
 
-  if (!folderInfo) {
+  if (!folders) {
     return <div></div>;
   }
-  console.log("folderInfo: ", folderInfo);
+  console.log("folders: ", folders);
 
   return (
     <div className={styles.wrap}>
@@ -21,15 +21,16 @@ const Folders = ({ isPrivate }) => {
         <div className={styles.group}>
           <h3>Public Folders</h3>
           <div className={styles.folders}>
-            {folderInfo
-              .filter((f) => !f.folder.hideFlag)
+            {folders
+              .filter((f) => !f.hideFlag)
               .map((f) => {
                 return (
                   <CardPrivate
-                    key={f.folder.id}
-                    id={f.folder.id}
-                    title={f.folder.title}
-                    url={f.folder.folderImg}
+                    key={f.id}
+                    id={f.id}
+                    data={f}
+                    title={f.title}
+                    url={f.folderImg}
                     tags={f.tagNames}
                   />
                 );
@@ -41,15 +42,15 @@ const Folders = ({ isPrivate }) => {
         <div className={styles.group}>
           <h3>Private Folders</h3>
           <div className={styles.folders}>
-            {folderInfo
-              .filter((f) => f.folder.hideFlag)
+            {folders
+              .filter((f) => f.hideFlag)
               .map((f) => {
                 return (
                   <CardPrivate
-                    key={f.folder.id}
-                    id={f.folder.id}
-                    title={f.folder.title}
-                    url={f.folder.folderImg}
+                    key={f.id}
+                    id={f.id}
+                    title={f.title}
+                    url={f.folderImg}
                     tags={f.tagNames}
                   />
                 );

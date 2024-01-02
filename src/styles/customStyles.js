@@ -9,7 +9,8 @@ const colors = {
   yellow: "#ebfc87",
 };
 
-export const toDataList = (tags) => {
+// 태그를 Select가 읽을 수 있는 데이터로 변환
+export const toData = (tag, idx) => {
   const colorList = [
     "#ebfc87",
     "#ed84f8",
@@ -18,11 +19,9 @@ export const toDataList = (tags) => {
     "#da96a6",
     "#fcc5b8",
   ];
+  const color = colorList[idx % 6];
 
-  return tags.map((tag, idx) => {
-    const color = colorList[idx % 6];
-    return { value: idx, label: tag, color: color };
-  });
+  return { value: idx, label: tag, color: color };
 };
 
 export const multiStyles = (data) => {
