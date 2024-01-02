@@ -1,9 +1,8 @@
-import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import CardPublic from '../components/folder/CardPublic';
-import styles from '../styles/Community.module.scss';
-import { FOLDER } from '../config/host-config';
-import useFetch, { getFolders } from '../services/folderApi';
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import CardPublic from "../components/folder/CardPublic";
+import styles from "../styles/Community.module.scss";
+import { getFolders } from "../services/folderApi";
 
 const Search = () => {
   const bookmarkClickHandler = () => {};
@@ -17,16 +16,14 @@ const Search = () => {
   const size = 10;
 
   useEffect(() => {
-    setFolderInfo(getFolders(pageNo, size, keyword));
-  }, []);
+    getFolders(pageNo, size, keyword).then((res) => setFolderInfo(res));
+  }, [keyword]);
 
   if (!folderInfo) {
     return <div></div>;
   }
 
-  console.log('folderInfo: ', folderInfo);
   const { list, page, count } = folderInfo;
-  console.log(list, page, count);
 
   return (
     <div className={styles.wrapper}>
