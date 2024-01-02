@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import CardPublic from "../components/folder/CardPublic";
 import styles from "../styles/Community.module.scss";
 import { getFolders } from "../services/folderApi";
+import Loading from "../components/ui/Loading";
 
 const Search = () => {
   const bookmarkClickHandler = () => {};
@@ -13,14 +14,14 @@ const Search = () => {
   const [folderInfo, setFolderInfo] = useState();
 
   const pageNo = 1;
-  const size = 10;
+  const size = 20;
 
   useEffect(() => {
     getFolders(pageNo, size, keyword).then((res) => setFolderInfo(res));
   }, [keyword]);
 
   if (!folderInfo) {
-    return <div></div>;
+    return <Loading />;
   }
 
   const { list, page, count } = folderInfo;
