@@ -33,6 +33,19 @@ export async function getMyFolders() {
   return await folders.map((f) => f.folder);
 }
 
+// 내 폴더 검색 요청
+export async function searchMyFolders(keyword) {
+  console.log("searchMyFolders 요청 들어옴!");
+  const res = await fetch(
+    `${FOLDER}/my/search?page=1&size=1&keyword=${keyword}`,
+    {
+      headers: requestTokenHeader,
+    }
+  );
+  const folders = await res.json();
+  return await folders.list;
+}
+
 // 사이트 목록 요청
 export async function getSites(id) {
   console.log("getSites 함수 호출!");
@@ -43,7 +56,7 @@ export async function getSites(id) {
   return await res.json();
 }
 
-// 사이트 추가
+// 북마크 추가
 export async function addSite(folderId, title, url, comment) {
   console.log("addSite 함수 호출!");
   return await fetch(SITE, {
@@ -56,14 +69,6 @@ export async function addSite(folderId, title, url, comment) {
       comment: comment,
     }),
   });
-}
-
-// 프로필 조회
-export async function getProfile() {
-  const res = await fetch(USER + "/profile", {
-    headers: requestTokenHeader,
-  });
-  return await res.json();
 }
 
 /*
