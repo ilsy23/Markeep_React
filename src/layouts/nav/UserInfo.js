@@ -1,18 +1,24 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styles from '../../styles/UserInfo.module.scss';
 import { ReactComponent as Pencil } from '../../assets/icons/pencil.svg';
 import { ReactComponent as Cancel } from '../../assets/icons/x.svg';
 import { ReactComponent as Check } from '../../assets/icons/check.svg';
-import { getProfile } from '../../services/userApi';
+import {
+  fetchPutNickname,
+  fetchUpdateProfile,
+  getProfile,
+} from '../../services/userApi';
 
 const UserInfo = () => {
   const [profile, setProfile] = useState();
   const [change, setChange] = useState(false);
   const [nick, setNick] = useState('');
 
+  const $fileTag = useRef();
+
   useEffect(() => {
     getProfile().then((res) => setProfile(res));
-  }, []);
+  }, [$fileTag, nick]);
 
   if (!profile) {
     return <div></div>;
@@ -20,8 +26,14 @@ const UserInfo = () => {
 
   console.log('profile: ', profile);
 
-  const { nickname, email, profileImage, followerCount, followingCount } =
+  const { profileImage, nickname, email, followerCount, followingCount } =
     profile;
+
+  const ImageChangeHandler = () => {
+    fetchUpdateProfile($fileTag.current.files[0]).then((res) =>
+      setProfile((prev) => ({ ...prev, profileImage: res }))
+    );
+  };
 
   const clickChangeHandler = () => {
     setChange(true);
@@ -29,6 +41,7 @@ const UserInfo = () => {
 
   const clickSaveHandler = () => {
     setChange(false);
+    fetchPutNickname(nick).then((res) => setNick(nick));
     setNick('');
   };
 
@@ -58,6 +71,8 @@ const UserInfo = () => {
             type='file'
             id='profile'
             style={{ display: 'none' }}
+            ref={$fileTag}
+            onChange={ImageChangeHandler}
           />
         </label>
       </div>
