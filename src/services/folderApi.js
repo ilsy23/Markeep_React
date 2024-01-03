@@ -29,7 +29,6 @@ export async function getMyFolders() {
   const res = await fetch(`${FOLDER}/my`, {
     headers: requestTokenHeader,
   });
-  console.log("folders: ", await res);
   const folders = await res.json();
   return await folders.map((f) => f.folder);
 }
@@ -47,7 +46,7 @@ export async function getSites(id) {
 // 사이트 추가
 export async function addSite(folderId, title, url, comment) {
   console.log("addSite 함수 호출!");
-  const res = await fetch(SITE, {
+  return await fetch(SITE, {
     method: "POST",
     headers: requestTokenHeader,
     body: JSON.stringify({
@@ -57,8 +56,6 @@ export async function addSite(folderId, title, url, comment) {
       comment: comment,
     }),
   });
-
-  return res.status;
 }
 
 // 프로필 조회

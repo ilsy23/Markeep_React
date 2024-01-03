@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { getMyFolders } from "../../services/folderApi";
+import { addSite, getMyFolders } from "../../services/folderApi";
 import styles from "../../styles/AddSite.module.scss";
 import Select from "react-select";
 import { colors, customStyles } from "../../styles/customStyles";
@@ -8,27 +8,42 @@ import { ReactComponent as AddIcon } from "../../assets/icons/plus.svg";
 
 const Add = () => {
   // 데이터 상태 관리
-  const [selected, setSelected] = useState({
+  const initialState = {
     folderId: "",
     title: "",
     url: "",
     comment: "",
-    isValid: false,
-  });
+    active: false,
+    isValidUrl: false,
+  };
 
-  // 입력 검사
+  const [selected, setSelected] = useState(initialState);
+
+  // 입력 검사 상태
   const [checkMsg, setCheckMsg] = useState({
     title: "",
     url: "",
   });
 
-  const { folderId, title, url, comment, isValid } = selected;
+  const { folderId, title, url, comment, active, isValidUrl } = selected;
   const urlRef = useRef();
   const titleRef = useRef();
+  const selectRef = useRef();
 
-  // 데이터 변경 상태 저장
+  // 버튼 활성화
+  useEffect(() => {
+    const activateButton = () => {
+      if (folderId && title && isValidUrl) {
+        setSelected((prev) => ({ ...prev, active: true }));
+        return;
+      }
+      setSelected((prev) => ({ ...prev, active: false }));
+    };
+    activateButton();
+  }, [folderId, title, isValidUrl]);
+
+  // 데이터 입력 상태 저장
   const handleChange = (e) => {
-    console.log("인풋 데이터 e.target: ", e.target);
     const { name, value } = e.target;
     setSelected((prev) => ({ ...prev, [name]: value }));
   };
@@ -47,17 +62,14 @@ const Add = () => {
   // 폴더를 셀렉트 옵션으로 변환.
   const options = folders.map((f) => ({ value: f.id, label: f.title }));
 
-  // 셀렉트 이벤트 처리
+  // 셀렉트 폴더 저장
   const handleSelectChange = (e) => {
     setSelected((prev) => ({ ...prev, folderId: e?.value }));
-    if (e?.value) {
-      titleRef.current.focus();
-    }
   };
 
   // title 입력 검사
   const handleTitleBlur = (e) => {
-    if (!selected.title) {
+    if (!title) {
       setCheckMsg((prev) => ({
         ...prev,
         title: "북마크 이름을 입력해 주세요.",
@@ -69,7 +81,7 @@ const Add = () => {
   };
 
   // url 유효성 검사
-  const handleUrlChange = (e) => {
+  const handleUrlKeyUp = (e) => {
     const urlRegex =
       /^(https?|ftp):\/\/(([a-z\d]([a-z\d-]*[a-z\d])?\.)+[a-z]{2,}|localhost)(\/[-a-z\d%_.~+]*)*(\?[;&a-z\d%_.~+=-]*)?(\#[-a-z\d_]*)?$/i;
 
@@ -78,20 +90,38 @@ const Add = () => {
         ...prev,
         url: "url 형식을 다시 확인해 주세요",
       }));
-      urlRef.current.focus();
+      setSelected((prev) => ({ ...prev, isValidUrl: false }));
       return;
     }
     setCheckMsg((prev) => ({ ...prev, url: "" }));
-    setSelected((prev) => ({ ...prev, url: e.target.value, isValid: true }));
+    setSelected((prev) => ({ ...prev, isValidUrl: true }));
   };
 
-  // 사이트 추가 요청
-  const handleAddClick = () => {};
+  const handleUrlBlur = (e) => {
+    if (!isValidUrl) {
+      urlRef.current.focus();
+    }
+  };
+
+  // 북마크 추가 요청
+  const handleAddClick = () => {
+    addSite(folderId, title, url, comment).then((res) => {
+      console.log("res", res.status);
+      if (res.status === 200) {
+        alert("북마크 등록 성공!");
+        setSelected(initialState);
+        selectRef.current.clearValue();
+        return;
+      }
+      alert("북마크 등록에 실패했습니다.");
+    });
+  };
 
   return (
     <div className={styles.wrapper}>
       <Select
         id="select"
+        ref={selectRef}
         autoFocus
         isClearable={true}
         isSearchable={true}
@@ -134,7 +164,9 @@ const Add = () => {
             name="url"
             placeholder="북마크 주소"
             value={url}
-            onChange={handleUrlChange}
+            onChange={handleChange}
+            onKeyUp={handleUrlKeyUp}
+            onBlur={handleUrlBlur}
             ref={urlRef}
           />
         </Input>
@@ -152,7 +184,7 @@ const Add = () => {
         </Input>
       </div>
       <button
-        className={isValid ? styles.activeButton : null}
+        className={active ? styles.activeButton : null}
         onClick={handleAddClick}
       >
         북마크 추가
