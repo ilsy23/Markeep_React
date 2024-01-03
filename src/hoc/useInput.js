@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useRef, useState } from "react";
 
 export const useInput = (initial, action) => {
   const [keyword, setKeyword] = useState(initial);
@@ -9,21 +9,21 @@ export const useInput = (initial, action) => {
   };
 
   const HandleCancelClick = () => {
-    setKeyword('');
+    setKeyword("");
   };
 
   const handleKeyDown = (e) => {
-    if (e.key === 'Enter') {
+    if (e.key === "Enter") {
       action(e);
       // inputRef.current.blur()
     }
   };
 
   return {
-    inputRef: inputRef,
-    keyword: keyword,
-    handleInputChange: handleInputChange,
-    HandleCancelClick: HandleCancelClick,
-    handleKeyDown: handleKeyDown,
+    inputRef,
+    keyword,
+    handleInputChange,
+    HandleCancelClick,
+    handleKeyDown,
   };
 };
