@@ -6,10 +6,13 @@ import Folders from "../components/folder/Folders";
 import Select from "react-select";
 import { colors, customStyles } from "../styles/customStyles";
 import { useInput } from "../hoc/useInput";
+import { Link, useLocation } from "react-router-dom";
 
 const MyPage = () => {
   const [search, setSearch] = useState("");
   const [option, setOption] = useState("all");
+  const location = useLocation();
+
   // 검색
   const handleClick = () => {
     setSearch(keyword);
@@ -40,20 +43,31 @@ const MyPage = () => {
       <div className={styles.header}>
         <h2>My Folder List</h2>
         <div className={styles.box}>
-          <input
-            placeholder="내 폴더 검색"
-            onChange={handleInputChange}
-            value={keyword}
-            onKeyDown={handleKeyDown}
-            ref={inputRef}
-          />
-          {keyword ? (
-            <div className={styles.cancel} onClick={HandleCancelClick}>
-              <Cancel className={styles.icon} />
+          <div className={styles.input_box}>
+            <input
+              placeholder="내 폴더 검색"
+              onChange={handleInputChange}
+              value={keyword}
+              onKeyDown={handleKeyDown}
+              ref={inputRef}
+            />
+            {keyword ? (
+              <div className={styles.cancel} onClick={HandleCancelClick}>
+                <Cancel className={styles.icon} />
+              </div>
+            ) : null}
+            <div className={styles.search} onClick={handleClick}>
+              <SearchIcon className={styles.icon} />
             </div>
-          ) : null}
-          <div className={styles.search} onClick={handleClick}>
-            <SearchIcon className={styles.icon} />
+          </div>
+          <div className={styles.buttons}>
+            <Link
+              to={"/view/public/folders/add"}
+              state={{ previousLocation: location }}
+            >
+              추가
+            </Link>
+            <button>삭제</button>
           </div>
           <Select
             id="select"

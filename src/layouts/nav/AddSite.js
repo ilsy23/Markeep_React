@@ -5,6 +5,7 @@ import Select from "react-select";
 import { colors, customStyles } from "../../styles/customStyles";
 import Input from "../../components/ui/Input";
 import { ReactComponent as AddIcon } from "../../assets/icons/plus.svg";
+import AsyncCreatableSelect from "react-select/async-creatable";
 
 const Add = () => {
   // 데이터 상태 관리

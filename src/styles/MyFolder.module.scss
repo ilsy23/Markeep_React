@@ -3,8 +3,11 @@
 .wrap {
   height: fit-content;
   background-color: $black;
-  width: 400px;
+  width: 100%;
   color: $white;
+
+  h4 {
+  }
 
   .image_box {
     width: 100px;
