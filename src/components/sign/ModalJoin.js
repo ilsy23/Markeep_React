@@ -118,8 +118,8 @@ const ModalJoin = () => {
     const inputValue = e.target.value;
     const emailRegex = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
 
-    let msg;
-    let flag = false;
+    let msg,
+      flag = false;
 
     if (!inputValue) {
       msg = '이메일은 필수값 입니다!';
@@ -172,7 +172,16 @@ const ModalJoin = () => {
   };
 
   const onChangeHandler = (e) => {
-    setEmailValue(e.target.value);
+    let msg,
+      flag = false;
+    const inputValue = e.target.value;
+
+    saveInputState({
+      key: 'email',
+      inputValue,
+      msg,
+      flag,
+    });
     console.log(e.target.value);
   };
 
