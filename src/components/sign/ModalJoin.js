@@ -34,6 +34,7 @@ const ModalJoin = () => {
   const API_BASE_URL = USER;
 
   const [code, setCode] = useState();
+  const [input, setInput] = useState();
   const [checked, setChecked] = useState(false);
   const [emailValue, setEmailValue] = useState();
 
@@ -85,24 +86,15 @@ const ModalJoin = () => {
   };
 
   // 이메일 중복 체크, 이메일 인증 서버 통신 함수
-  const fetchDuplicateCheck = async (email) => {
+  const fetchDuplicateCheck = async () => {
     let msg = '';
     let flag = false;
 
-    const res = await fetch(API_BASE_URL + '/join?email=' + email);
+    const res = await fetch(API_BASE_URL + '/join?email=' + emailValue);
 
     if (res.status === 200) {
-      const json = await res.json();
-
-      if (json) {
-        msg = '이메일이 중복되었습니다.';
-      } else {
-        msg = '사용 가능한 이메일 입니다.';
-        flag = true;
-      }
-
-      const code = res.text();
-      console.log(code);
+      const code = await res.text();
+      console.log('code: ', code);
       setCode(code);
 
       // 이메일 인증코드 확인(코드가 맞으면 찐한체크표시)
@@ -112,7 +104,7 @@ const ModalJoin = () => {
 
       saveInputState({
         key: 'email',
-        inputValue: email,
+        inputValue: emailValue,
         msg,
         flag,
       });
@@ -167,11 +159,16 @@ const ModalJoin = () => {
     setEmailInputFocused(false);
   };
 
-  const emailCheckHandler = (e) => {
-    if (code === e.target.value) {
+  const codeCheckHandler = (e) => {
+    if (code === input) {
+      console.log('code: ', code);
       setChecked(true);
-    } else {
     }
+  };
+
+  const codeChangeHandler = (e) => {
+    setInput(e.target.value);
+    console.log('code: ', code);
   };
 
   const onChangeHandler = (e) => {
@@ -212,11 +209,10 @@ const ModalJoin = () => {
                       aria-label='toggle password visibility'
                       // onMouseDown={handleMouseDownPassword}
                       edge='end'
+                      onClick={fetchDuplicateCheck}
                     >
                       {isDuplicateChecked ? (
-                        <CheckCircleIcon
-                          onClick={fetchDuplicateCheck(emailValue)}
-                        />
+                        <CheckCircleIcon />
                       ) : (
                         <CheckCircleOutlineIcon />
                       )}
@@ -254,6 +250,8 @@ const ModalJoin = () => {
                 fullWidth
                 placeholder='인증코드'
                 margin='normal'
+                onChange={codeChangeHandler}
+                onKeyUp={codeCheckHandler}
                 InputProps={{
                   // startAdornment: (
                   //   <InputAdornment position='start'>
@@ -264,10 +262,7 @@ const ModalJoin = () => {
                     <InputAdornment position='end'>
                       <IconButton
                         aria-label='toggle password visibility'
-                        // onClick={}
-
                         edge='end'
-                        onKeyDown={emailCheckHandler}
                       >
                         {checked && <CheckIcon />}
                       </IconButton>

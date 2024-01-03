@@ -1,6 +1,6 @@
 import chroma from "chroma-js";
 
-const colors = {
+export const colors = {
   blue: "#bbb4fe",
   purple: "#ed84f8",
   salmon: "#fcc5b8",
