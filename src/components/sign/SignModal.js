@@ -48,6 +48,7 @@ const SignModal = ({ status, handleClose }) => {
         sx: {
           background: '#413a6f',
           borderRadius: '30px',
+          width: '400px',
         },
       }}
     >
