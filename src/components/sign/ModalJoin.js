@@ -20,8 +20,9 @@ import { USER } from '../../config/host-config';
 import GoogleLoginBtn from '../sns-login/GoogleLoginBtn';
 import { KAKAO_AUTH_URL } from '../../config/kakao-config';
 import { NAVER_AUTH_URL } from '../../config/naver-config';
+import { requestHeader } from '../../hoc/folderApi';
 
-const ModalJoin = () => {
+const ModalJoin = ({ setValue, handleClose }) => {
   // useRef를 사용해서 태그 참조하기
   const $fileTag = useRef();
 
@@ -62,6 +63,7 @@ const ModalJoin = () => {
     email: false,
     password: false,
     passwordConfirm: false,
+    nickname: false,
   });
 
   // 검증된 데이터를 각각의 상태변수에 저장해 주는 함수
@@ -87,29 +89,21 @@ const ModalJoin = () => {
 
   // 이메일 중복 체크, 이메일 인증 서버 통신 함수
   const fetchDuplicateCheck = async () => {
-    let msg = '';
-    let flag = false;
-
-    const res = await fetch(API_BASE_URL + '/join?email=' + emailValue);
+    const res = await fetch(API_BASE_URL + '/join?email=' + userValue.email);
 
     if (res.status === 200) {
       const code = await res.text();
       console.log('code: ', code);
       setCode(code);
-
-      // 이메일 인증코드 확인(코드가 맞으면 찐한체크표시)
-      if (code) {
-        setDuplicateChecked(true);
-      }
-
+    } else if (res.status === 400) {
+      alert('이미 가입된 이메일입니다.');
+      let flag = false;
       saveInputState({
         key: 'email',
-        inputValue: emailValue,
-        msg,
+        userValue,
+        msg: '다시 입력해주세요.',
         flag,
       });
-    } else {
-      console.log('서버 통신이 원활하지 않습니다.');
     }
   };
 
@@ -126,10 +120,8 @@ const ModalJoin = () => {
     } else if (!emailRegex.test(inputValue)) {
       msg = '이메일 형식이 올바르지 않습니다.';
     } else {
-      // 이메일 중복 체크
-      fetchDuplicateCheck(inputValue);
+      msg = '이메일 인증을 진행해주세요..';
     }
-
     saveInputState({
       key: 'email',
       inputValue,
@@ -137,6 +129,79 @@ const ModalJoin = () => {
       flag,
     });
   };
+
+  const passwordHandler = (e) => {
+    const inputValue = e.target.value;
+    const pwRegex =
+      /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,20}$/;
+
+    let msg,
+      flag = false;
+
+    if (!inputValue) {
+      msg = '입력값은 필수입니다.';
+    } else if (!pwRegex.test(inputValue)) {
+      msg = '유효하지 않은 입력값입니다.';
+    } else {
+      msg = '사용 가능한 비밀번호입니다.';
+      flag = true;
+    }
+
+    saveInputState({
+      key: 'password',
+      inputValue,
+      flag,
+      msg,
+    });
+  };
+
+  const passwordCheckHandler = (e) => {
+    let msg,
+      flag = false;
+
+    if (!e.target.value) {
+      msg = '비밀번호 확인란은 필수입니다.';
+    } else if (userValue.password !== e.target.value) {
+      msg = '비밀번호가 일치하지 않습니다.';
+    } else {
+      msg = '비밀번호가 일치합니다.';
+      flag = true;
+    }
+
+    saveInputState({
+      key: 'passwordConfirm',
+      inputValue: 'pass',
+      flag,
+      msg,
+    });
+  };
+
+  const nicknameHandler = (e) => {
+    let msg,
+      flag = false;
+
+    const nicknameReg = /^[A-Za-z0-9가-힣]{2,8}$/;
+    const inputValue = e.target.value;
+
+    if (!e.target.value) {
+      msg = '입력값은 필수입니다.';
+    } else if (!nicknameReg.test(inputValue)) {
+      msg = '유효하지 않은 입력값입니다.';
+    } else {
+      msg = '사용가능한 닉네임입니다.';
+      flag = true;
+    }
+
+    saveInputState({
+      key: 'nickname',
+      inputValue,
+      flag,
+      msg,
+    });
+
+    console.log(userValue.nickname);
+  };
+
   // 새로운 상태 추가
   const [isEmailInputFocused, setEmailInputFocused] = useState(false);
   const [isDuplicateChecked, setDuplicateChecked] = useState(false);
@@ -161,8 +226,17 @@ const ModalJoin = () => {
 
   const codeCheckHandler = (e) => {
     if (code === input) {
+      let msg = '이메일 인증이 완료되었습니다.';
+      let flag = true;
       console.log('code: ', code);
       setChecked(true);
+
+      saveInputState({
+        key: 'email',
+        inputValue: userValue.email,
+        msg,
+        flag,
+      });
     }
   };
 
@@ -171,18 +245,43 @@ const ModalJoin = () => {
     console.log('code: ', code);
   };
 
-  const onChangeHandler = (e) => {
-    let msg,
-      flag = false;
-    const inputValue = e.target.value;
+  const isValid = (e) => {
+    for (const key in correct) {
+      const flag = correct[key];
+      console.log('key, flag: ', key, flag);
+      if (!flag) return false;
+    }
+    return true;
+  };
 
-    saveInputState({
-      key: 'email',
-      inputValue,
-      msg,
-      flag,
+  const fetchJoin = async () => {
+    const res = await fetch(USER + '/join', {
+      method: 'POST',
+      headers: requestHeader,
+      body: JSON.stringify({
+        email: userValue.email,
+        password: userValue.password,
+        nickname: userValue.nickname,
+      }),
     });
-    console.log(e.target.value);
+
+    if (res.status === 200) {
+      alert('정상적으로 가입되었습니다.');
+      // handleClose();
+      setValue('signIn');
+    } else if (res.status === 400) {
+      alert('이미 가입된 이메일입니다.');
+    }
+  };
+
+  const joinButtonClickHandler = (e) => {
+    e.preventDefault();
+
+    if (isValid()) {
+      fetchJoin();
+    } else {
+      alert('입력값을 다시 한번 확인해주세요.');
+    }
   };
 
   return (
@@ -205,7 +304,7 @@ const ModalJoin = () => {
               fullWidth
               placeholder='Email'
               // margin='normal'
-              onChange={onChangeHandler}
+              onChange={emailHandler}
               InputProps={{
                 startAdornment: (
                   <InputAdornment position='start'>
@@ -249,6 +348,29 @@ const ModalJoin = () => {
               onFocus={handleEmailInputFocus}
               onBlur={handleEmailInputBlur}
             />
+            <div
+              style={
+                correct.email
+                  ? {
+                      color: 'green',
+                      width: '80%',
+                      height: '10px',
+                      margin: 'auto',
+                      borderRadius: '20px',
+                      cursor: 'none',
+                    }
+                  : {
+                      color: 'red',
+                      width: '80%',
+                      height: '10px',
+                      margin: 'auto',
+                      borderRadius: '20px',
+                      cursor: 'none',
+                    }
+              }
+            >
+              {message.email}
+            </div>
             <Grid
               item
               xs={12}
@@ -308,6 +430,7 @@ const ModalJoin = () => {
               fullWidth
               placeholder='Password'
               margin='normal'
+              onChange={passwordHandler}
               InputProps={{
                 startAdornment: (
                   <InputAdornment position='start'>
@@ -331,6 +454,29 @@ const ModalJoin = () => {
                 },
               }}
             />
+            <div
+              style={
+                correct.password
+                  ? {
+                      color: 'green',
+                      width: '80%',
+                      height: '10px',
+                      margin: 'auto',
+                      borderRadius: '20px',
+                      cursor: 'none',
+                    }
+                  : {
+                      color: 'red',
+                      width: '80%',
+                      height: '10px',
+                      margin: 'auto',
+                      borderRadius: '20px',
+                      cursor: 'none',
+                    }
+              }
+            >
+              {message.password}
+            </div>
           </Grid>
           <Grid
             item
@@ -342,6 +488,7 @@ const ModalJoin = () => {
               fullWidth
               placeholder='Password Confirm'
               margin='normal'
+              onChange={passwordCheckHandler}
               InputProps={{
                 startAdornment: (
                   <InputAdornment position='start'>
@@ -365,6 +512,83 @@ const ModalJoin = () => {
                 },
               }}
             />
+            <div
+              style={
+                correct.passwordConfirm
+                  ? {
+                      color: 'green',
+                      width: '80%',
+                      height: '10px',
+                      margin: 'auto',
+                      borderRadius: '20px',
+                    }
+                  : {
+                      color: 'red',
+                      width: '80%',
+                      height: '10px',
+                      margin: 'auto',
+                      borderRadius: '20px',
+                    }
+              }
+            >
+              {message.passwordConfirm}
+            </div>
+          </Grid>
+          <Grid
+            item
+            xs={12}
+          >
+            <TextField
+              type='text'
+              variant='outlined'
+              fullWidth
+              placeholder='Nickname'
+              margin='normal'
+              onChange={nicknameHandler}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position='start'>
+                    <LockOutlinedIcon sx={{ color: 'gray' }} />
+                  </InputAdornment>
+                ),
+                style: {
+                  border: '1px solid #363636',
+                  color: 'lightgray',
+                  width: '80%',
+                  height: '45px',
+                  margin: 'auto',
+                  borderRadius: '20px',
+                },
+              }}
+              sx={{
+                '& .MuiOutlinedInput-root': {
+                  '&.Mui-focused fieldset': {
+                    borderColor: 'lightgray', // 포커스됐을 때의 테두리 색상 변경
+                  },
+                },
+              }}
+            />
+            <div
+              style={
+                correct.nickname
+                  ? {
+                      color: 'green',
+                      width: '80%',
+                      height: '10px',
+                      margin: 'auto',
+                      borderRadius: '20px',
+                    }
+                  : {
+                      color: 'red',
+                      width: '80%',
+                      height: '10px',
+                      margin: 'auto',
+                      borderRadius: '20px',
+                    }
+              }
+            >
+              {message.nickname}
+            </div>
           </Grid>
         </Grid>
         <Button
@@ -375,6 +599,7 @@ const ModalJoin = () => {
             borderRadius: '30px',
             margin: '1em 11.5em',
           }}
+          onClick={joinButtonClickHandler}
         >
           Next
           {/* <NavigateNextIcon fontSize='medium' /> */}

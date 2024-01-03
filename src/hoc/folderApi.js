@@ -1,17 +1,17 @@
-import { FOLDER, SITE, USER } from "../config/host-config";
+import { FOLDER, SITE, USER } from '../config/host-config';
 
-const token = localStorage.getItem("ACCESS_TOKEN");
+const token = localStorage.getItem('ACCESS_TOKEN');
 const requestTokenHeader = {
-  "content-type": "application/json",
-  Authorization: "Bearer " + token,
+  'content-type': 'application/json',
+  Authorization: 'Bearer ' + token,
 };
-const requestHeader = {
-  "content-type": "application/json",
+export const requestHeader = {
+  'content-type': 'application/json',
 };
 
 // 폴더 목록 요청
 export async function getFolders(pageNo, size, keyword) {
-  console.log("getFolders 함수 호출");
+  console.log('getFolders 함수 호출');
 
   const res = await fetch(
     `${FOLDER}/all?page=${pageNo}&size=${size}&keyword=${keyword}`
@@ -25,9 +25,9 @@ export async function getFolders(pageNo, size, keyword) {
 
 // 내 폴더 목록 요청
 export async function getMyFolders() {
-  console.log("getMyFolders 함수 호출!");
+  console.log('getMyFolders 함수 호출!');
 
-  const res = await fetch(FOLDER + "/my", {
+  const res = await fetch(FOLDER + '/my', {
     headers: requestTokenHeader,
   });
   const folders = await res.json();
@@ -36,7 +36,7 @@ export async function getMyFolders() {
 
 // 사이트 목록 요청
 export async function getSites(id) {
-  console.log("getSites 함수 호출!");
+  console.log('getSites 함수 호출!');
 
   const res = await fetch(`${SITE}?folderId=${id}`, {
     headers: requestTokenHeader,
@@ -47,7 +47,7 @@ export async function getSites(id) {
 // 사이트 추가
 export async function addSite(folderId, title, url, comment) {
   const res = await fetch(SITE, {
-    method: "POST",
+    method: 'POST',
     headers: requestTokenHeader,
     body: JSON.stringify({
       folderId: folderId,
@@ -58,17 +58,17 @@ export async function addSite(folderId, title, url, comment) {
   });
 
   if (res.status === 200) {
-    alert("성공적으로 등록되었습니다!");
+    alert('성공적으로 등록되었습니다!');
   } else if (res.status === 400) {
-    alert("입력 값을 다시 한번 확인해주십시오!");
+    alert('입력 값을 다시 한번 확인해주십시오!');
   } else {
-    alert("등록에 실패했습니다. markeepMG@gmail.com으로 문의주세요");
+    alert('등록에 실패했습니다. markeepMG@gmail.com으로 문의주세요');
   }
 }
 
 // 프로필 조회
 export async function getProfile() {
-  const res = await fetch(USER + "/profile", {
+  const res = await fetch(USER + '/profile', {
     headers: requestTokenHeader,
   });
   return await res.json();

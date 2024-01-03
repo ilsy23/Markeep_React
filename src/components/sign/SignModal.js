@@ -90,7 +90,12 @@ const SignModal = ({ status, handleClose }) => {
           handleClose={handleClose}
         />
       )}
-      {value === 'signUp' && <ModalJoin />}
+      {value === 'signUp' && (
+        <ModalJoin
+          setValue={setValue}
+          handleClose={handleClose}
+        />
+      )}
     </Dialog>
   );
 };
