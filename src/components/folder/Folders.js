@@ -1,15 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import styles from '../../styles/Folders.module.scss';
-import { getMyFolders } from '../../services/folderApi';
+import { getMyFolders, searchMyFolders } from '../../services/folderApi';
 import CardPrivate from './CardPrivate';
 import Loading from '../ui/Loading';
 
-const Folders = ({ isPrivate }) => {
+const Folders = ({ option, keyword }) => {
   const [folders, setFolders] = useState();
 
   useEffect(() => {
+    if (keyword) {
+      searchMyFolders(keyword).then((res) => setFolders(res));
+      return;
+    }
     getMyFolders().then((res) => setFolders(res));
-  }, []);
+  }, [keyword]);
 
   if (!folders) {
     return <Loading />;
@@ -18,7 +22,7 @@ const Folders = ({ isPrivate }) => {
 
   return (
     <div className={styles.wrap}>
-      {!isPrivate && (
+      {(option === 'all' || option === 'public') && (
         <div className={styles.group}>
           <h3>Public Folders</h3>
           <div className={styles.folders}>
@@ -39,7 +43,7 @@ const Folders = ({ isPrivate }) => {
           </div>
         </div>
       )}
-      {isPrivate && (
+      {(option === 'all' || option === 'private') && (
         <div className={styles.group}>
           <h3>Private Folders</h3>
           <div className={styles.folders}>

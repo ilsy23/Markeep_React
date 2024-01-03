@@ -64,7 +64,7 @@ const Nav = () => {
     {
       title: "북마크 추가",
       icon: <PlusIcon className={styles.icon} />,
-      content: <AddSite />,
+      content: <AddSite activeModal={active} />,
       name: "add",
     },
     {

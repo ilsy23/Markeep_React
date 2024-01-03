@@ -1,41 +1,38 @@
 import styles from '../styles/Mypage.module.scss';
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { ReactComponent as SearchIcon } from '../assets/icons/search.svg';
 import { ReactComponent as Cancel } from '../assets/icons/x.svg';
 import Folders from '../components/folder/Folders';
-import { ToggleButton, ToggleButtonGroup } from '@mui/material';
+import Select from 'react-select';
+import { colors, customStyles } from '../styles/customStyles';
+import { useInput } from '../hoc/useInput';
 
 const MyPage = () => {
-  const [keyword, setKeyword] = useState('');
-  const inputRef = useRef();
-
-  const getText = (e) => {
-    setKeyword(e.target.value);
+  const [search, setSearch] = useState('');
+  const [option, setOption] = useState('all');
+  // 검색
+  const handleClick = () => {
+    setSearch(keyword);
+    inputRef.current.blur();
   };
 
-  const clickCancelHandler = (e) => {
-    setKeyword('');
-  };
+  const {
+    inputRef,
+    keyword,
+    handleInputChange,
+    HandleCancelClick,
+    handleKeyDown,
+  } = useInput('', handleClick);
 
-  const keyDownHandler = (e) => {
-    if (e.key === 'Enter') {
-      clickSearchHandler();
-      inputRef.current.blur();
-    }
-  };
+  // 폴더 분류
+  const options = [
+    { value: 'all', label: 'All' },
+    { value: 'public', label: 'Public' },
+    { value: 'private', label: 'Private' },
+  ];
 
-  const clickSearchHandler = (e) => {};
-
-  // 토글
-  const [alignment, setAlignment] = React.useState('web');
-  const [isPrivate, setIsPrivate] = useState(false);
-
-  const handleChange = (event, newAlignment) => {
-    setAlignment(newAlignment);
-  };
-
-  const handleBUttonClick = () => {
-    setIsPrivate(!isPrivate);
+  const handleSelectChange = (e) => {
+    setOption(e?.value);
   };
 
   return (
@@ -45,49 +42,51 @@ const MyPage = () => {
         <div className={styles.box}>
           <input
             placeholder='내 폴더 검색'
-            onChange={getText}
+            onChange={handleInputChange}
             value={keyword}
-            onKeyDown={keyDownHandler}
+            onKeyDown={handleKeyDown}
             ref={inputRef}
           />
           {keyword ? (
             <div
               className={styles.cancel}
-              onClick={clickCancelHandler}
+              onClick={HandleCancelClick}
             >
               <Cancel className={styles.icon} />
             </div>
           ) : null}
           <div
             className={styles.search}
-            onClick={clickSearchHandler}
+            onClick={handleClick}
           >
             <SearchIcon className={styles.icon} />
           </div>
-          <ToggleButtonGroup
-            color='primary'
-            value={alignment}
-            exclusive
-            onChange={handleChange}
-            aria-label='Platform'
-          >
-            <ToggleButton
-              value='public'
-              onClick={handleBUttonClick}
-            >
-              Public
-            </ToggleButton>
-            <ToggleButton
-              value='private'
-              onClick={handleBUttonClick}
-            >
-              Private
-            </ToggleButton>
-          </ToggleButtonGroup>
+          <Select
+            id='select'
+            defaultValue={{ value: 'all', label: 'All' }}
+            options={options}
+            onChange={handleSelectChange}
+            maxMenuHeight={'160px'}
+            styles={customStyles}
+            theme={(theme) => ({
+              ...theme,
+              colors: {
+                ...theme.colors,
+
+                neutral20: 'rgba(187, 180, 254, 0.4)',
+                primary: colors.purple,
+                neutral80: colors.white,
+                neutral60: colors.blue,
+              },
+            })}
+          />
         </div>
       </div>
       <div className={styles.content}>
-        <Folders isPrivate={isPrivate} />
+        <Folders
+          option={option}
+          keyword={search}
+        />
       </div>
     </div>
   );
