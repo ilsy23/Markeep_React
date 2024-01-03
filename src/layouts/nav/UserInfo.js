@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from "react";
-import styles from "../../styles/UserInfo.module.scss";
-import { ReactComponent as Pencil } from "../../assets/icons/pencil.svg";
-import { ReactComponent as Cancel } from "../../assets/icons/x.svg";
-import { ReactComponent as Check } from "../../assets/icons/check.svg";
-import { getProfile } from "../../services/userApi";
+import React, { useEffect, useState } from 'react';
+import styles from '../../styles/UserInfo.module.scss';
+import { ReactComponent as Pencil } from '../../assets/icons/pencil.svg';
+import { ReactComponent as Cancel } from '../../assets/icons/x.svg';
+import { ReactComponent as Check } from '../../assets/icons/check.svg';
+import { getProfile } from '../../services/userApi';
 
 const UserInfo = () => {
   const [profile, setProfile] = useState();
   const [change, setChange] = useState(false);
-  const [nick, setNick] = useState("");
+  const [nick, setNick] = useState('');
 
   useEffect(() => {
     getProfile().then((res) => setProfile(res));
@@ -18,7 +18,7 @@ const UserInfo = () => {
     return <div></div>;
   }
 
-  console.log("profile: ", profile);
+  console.log('profile: ', profile);
 
   const { nickname, email, profileImage, followerCount, followingCount } =
     profile;
@@ -29,7 +29,7 @@ const UserInfo = () => {
 
   const clickSaveHandler = () => {
     setChange(false);
-    setNick("");
+    setNick('');
   };
 
   const getText = (e) => {
@@ -37,46 +37,69 @@ const UserInfo = () => {
   };
 
   const clickCancelHandler = () => {
-    setNick("");
+    setNick('');
   };
 
   return (
     <div className={styles.wrap}>
       <div className={styles.profile}>
         <div className={styles.img_box}>
-          <img src={profileImage} alt="프로필 사진" />
+          <img
+            src={profileImage}
+            alt='프로필 사진'
+          />
         </div>
-        <label className={styles.icon_box} htmlFor="profile">
+        <label
+          className={styles.icon_box}
+          htmlFor='profile'
+        >
           <Pencil className={styles.icon} />
-          <input type="file" id="profile" style={{ display: "none" }} />
+          <input
+            type='file'
+            id='profile'
+            style={{ display: 'none' }}
+          />
         </label>
       </div>
       <div>{email}</div>
       {!change ? (
         <div className={styles.box}>
           <div>{nickname}</div>
-          <div className={styles.pencil} onClick={clickChangeHandler}>
+          <div
+            className={styles.pencil}
+            onClick={clickChangeHandler}
+          >
             <Pencil className={styles.icon} />
           </div>
         </div>
       ) : (
         <div className={styles.box}>
           <input
-            name="nickname"
+            name='nickname'
             placeholder={nickname}
             onChange={getText}
             value={nick}
           />
           {nick ? (
-            <div className={styles.cancel} onClick={clickCancelHandler}>
+            <div
+              className={styles.cancel}
+              onClick={clickCancelHandler}
+            >
               <Cancel className={styles.icon} />
             </div>
           ) : null}
-          <div className={styles.check} onClick={clickSaveHandler}>
+          <div
+            className={styles.check}
+            onClick={clickSaveHandler}
+          >
             <Check className={styles.icon} />
           </div>
         </div>
       )}
+      <div className={styles.box}>
+        <p>팔로워 {followerCount}</p>
+        <p>팔로잉 {followingCount}</p>
+      </div>
 
       {/* <button>비밀번호 변경</button> */}
     </div>
