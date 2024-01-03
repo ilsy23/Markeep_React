@@ -1,5 +1,5 @@
-import styles from "../../styles/CardPrivate.module.scss";
-import { Link, useLocation } from "react-router-dom";
+import styles from '../../styles/CardPrivate.module.scss';
+import { Link, useLocation } from 'react-router-dom';
 
 const CardPrivate = ({ id, data, url, title, tags }) => {
   const location = useLocation();
@@ -12,13 +12,19 @@ const CardPrivate = ({ id, data, url, title, tags }) => {
           state={{ previousLocation: location, data: data }}
         >
           <div className={styles.image_box}>
-            <img src={url} alt="폴더 이미지" />
+            <img
+              src={url}
+              alt='폴더 이미지'
+            />
           </div>
           <h4>{title}</h4>
           <div className={styles.tag_box}>
             {tags.map((tag, idx) => {
               return (
-                <div key={idx} className={styles.tag}>
+                <div
+                  key={idx}
+                  className={styles.tag}
+                >
                   {tag}
                 </div>
               );
@@ -26,7 +32,11 @@ const CardPrivate = ({ id, data, url, title, tags }) => {
           </div>
         </Link>
         <div className={styles.check}>
-          <input className={styles.check_item} type="checkbox" value={id} />
+          <input
+            className={styles.check_item}
+            type='checkbox'
+            value={id}
+          />
         </div>
       </div>
     </div>

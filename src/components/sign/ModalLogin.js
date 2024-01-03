@@ -22,7 +22,12 @@ import { KAKAO_AUTH_URL } from '../../config/kakao-config';
 import { NAVER_AUTH_URL } from '../../config/naver-config';
 import GoogleLoginBtn from '../sns-login/GoogleLoginBtn';
 
-const ModalLogin = ({ handleChange, setValue, setShowForgotPassword }) => {
+const ModalLogin = ({
+  handleChange,
+  setValue,
+  setShowForgotPassword,
+  handleClose,
+}) => {
   const redirection = useNavigate();
 
   const { onLogin } = useContext(AuthContext);
@@ -58,7 +63,7 @@ const ModalLogin = ({ handleChange, setValue, setShowForgotPassword }) => {
 
     const res = await fetch(REQUEST_URL, {
       method: 'POST',
-      headers: { 'content-type': 'apllication/json' },
+      headers: { 'content-type': 'application/json' },
       body: JSON.stringify({
         email: $email.value,
         password: $password.value,
@@ -72,10 +77,11 @@ const ModalLogin = ({ handleChange, setValue, setShowForgotPassword }) => {
       return;
     }
 
-    const { token, userName, email, role } = await res.json(); // 서버에서 온 json 읽기
+    const { accessToken, refreshToken } = await res.json(); // 서버에서 온 json 읽기
+    console.log('accessToken: ', res);
 
     // Context API를 사용하여 로그인 상태를 업데이트 합니다.
-    onLogin(token, userName, role);
+    onLogin(accessToken, refreshToken);
 
     // 홈으로 리다이렉트
     redirection('/');
@@ -87,6 +93,7 @@ const ModalLogin = ({ handleChange, setValue, setShowForgotPassword }) => {
 
     // 서버에 로그인 요청 전송
     fetchLogin();
+    handleClose();
   };
 
   // forgot password 클릭시 이동

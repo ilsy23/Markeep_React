@@ -1,12 +1,12 @@
-import { Link, useLocation } from "react-router-dom";
-import styles from "../../styles/MyFolder.module.scss";
-import Select from "react-select";
-import { ReactComponent as Up } from "../../assets/icons/up.svg";
-import { ReactComponent as Down } from "../../assets/icons/down.svg";
-import { multiStyles, toData } from "../../styles/customStyles";
-import { useEffect, useState } from "react";
-import { getSites } from "../../services/folderApi";
-import Loading from "../../components/ui/Loading";
+import { Link, useLocation } from 'react-router-dom';
+import styles from '../../styles/MyFolder.module.scss';
+import Select from 'react-select';
+import { ReactComponent as Up } from '../../assets/icons/up.svg';
+import { ReactComponent as Down } from '../../assets/icons/down.svg';
+import { multiStyles, toData } from '../../styles/customStyles';
+import { useEffect, useState } from 'react';
+import { getSites } from '../../services/folderApi';
+import Loading from '../../components/ui/Loading';
 
 const MyFolder = () => {
   const location = useLocation();
@@ -44,7 +44,10 @@ const MyFolder = () => {
     <div className={styles.wrap}>
       <h4>{title}</h4>
       <div className={styles.image_box}>
-        <img src={url} alt="폴더 이미지" />
+        <img
+          src={url}
+          alt='폴더 이미지'
+        />
       </div>
       <div className={styles.tag_box}>
         <Select
@@ -67,7 +70,10 @@ const MyFolder = () => {
           return (
             <div key={s.id}>
               <div className={styles.site}>
-                <img src={s.url + "/favicon.ico"} alt="favicon" />
+                <img
+                  src={s.url + '/favicon.ico'}
+                  alt='favicon'
+                />
                 <div>{s.siteName}</div>
                 <div>{s.url}</div>
                 {openIdx.includes(idx) ? (

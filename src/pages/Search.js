@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import CardPublic from "../components/folder/CardPublic";
-import styles from "../styles/Community.module.scss";
-import { getFolders } from "../services/folderApi";
-import Loading from "../components/ui/Loading";
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import CardPublic from '../components/folder/CardPublic';
+import styles from '../styles/Community.module.scss';
+import { getFolders } from '../services/folderApi';
+import Loading from '../components/ui/Loading';
 
 const Search = () => {
   const bookmarkClickHandler = () => {};

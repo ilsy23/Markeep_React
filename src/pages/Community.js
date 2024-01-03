@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
-import styles from "../styles/Community.module.scss";
-import CardPublic from "../components/folder/CardPublic";
-import { getFolders } from "../services/folderApi";
-import Loading from "../components/ui/Loading";
+import React, { useEffect, useState } from 'react';
+import styles from '../styles/Community.module.scss';
+import CardPublic from '../components/folder/CardPublic';
+import { getFolders } from '../services/folderApi';
+import Loading from '../components/ui/Loading';
 
 const Community = () => {
   const bookmarkClickHandler = () => {};
@@ -13,12 +13,12 @@ const Community = () => {
   // td 이거 데이터 확인용 더미로 넣은 거니까 삭제하세요!
   const td = {
     image:
-      "https://i.pinimg.com/564x/0d/e0/c0/0de0c0721c576c0e9fbd79abd6668089.jpg",
+      'https://i.pinimg.com/564x/0d/e0/c0/0de0c0721c576c0e9fbd79abd6668089.jpg',
     profileImg:
-      "https://i.pinimg.com/564x/e2/21/f0/e221f0954109ff15ad17ad7d05a1859b.jpg",
+      'https://i.pinimg.com/564x/e2/21/f0/e221f0954109ff15ad17ad7d05a1859b.jpg',
     isMarked: true,
-    title: "테스트 제목입니다.",
-    writer: "chunsik",
+    title: '테스트 제목입니다.',
+    writer: 'chunsik',
     isFollowed: true,
     pin: 234,
     bookmarkClickHandler: { bookmarkClickHandler },
@@ -32,7 +32,7 @@ const Community = () => {
   const size = 20;
 
   useEffect(() => {
-    getFolders(pageNo, size, "").then((res) => setFolderInfo(res));
+    getFolders(pageNo, size, '').then((res) => setFolderInfo(res));
   }, []);
 
   if (!folderInfo) {
@@ -40,6 +40,11 @@ const Community = () => {
   }
 
   const { list, page, count } = folderInfo;
+  console.log('list 확인: ', list);
+  console.log(
+    'followFlag 확인',
+    list.map((l) => l.followFlag)
+  );
 
   return (
     <div className={styles.wrapper}>
