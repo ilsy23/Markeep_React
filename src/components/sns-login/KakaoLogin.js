@@ -14,6 +14,8 @@ const KakaoLogin = () => {
       console.log('카카오 로그인 요청!!!');
       const res = await fetch(API_REQUEST_URL);
 
+      console.log('res: ', res);
+
       const { accessToken, refreshToken } = await res.json();
       onLogin(accessToken, refreshToken);
     };

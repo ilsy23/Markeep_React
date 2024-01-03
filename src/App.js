@@ -11,6 +11,7 @@ import MyFolder from './pages/modal/MyFolder';
 import EditFolder from './pages/modal/EditFolder';
 import Search from './pages/Search';
 import './styles/App.scss';
+import KakaoLogin from './components/sns-login/KakaoLogin';
 
 function App() {
   let location = useLocation();
@@ -43,6 +44,10 @@ function App() {
             <Route
               path='/:keyword'
               element={<Search />}
+            />
+            <Route
+              path='/oauth/redirected/kakao'
+              element={<KakaoLogin />}
             />
           </Routes>
 
