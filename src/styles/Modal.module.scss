@@ -1,8 +1,8 @@
-@import "variables";
+@import "variables", "mixin";
 
 .background {
   position: absolute;
-  background-color: rgba($black, 0.4);
+  background-color: rgba($dark, 0.4);
   width: 100vw;
   height: 100vh;
   top: 0;
@@ -14,6 +14,13 @@
 }
 
 .modal {
-  width: 400px;
-  background-color: $blue;
+  width: 420px;
+  height: 580px;
+  border-radius: 16px;
+  box-sizing: border-box;
+  position: relative;
+  color: $white;
+  font-family: Urban-l;
+
+  @include border($bg: $black, $s: $yellow, $e: $purple);
 }
