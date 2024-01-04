@@ -5,12 +5,13 @@ import Nav from "./layouts/nav/Nav";
 import Header from "./layouts/Header";
 import Community from "./pages/Community";
 import MyPage from "./pages/MyPage";
-import Modal from "./pages/modal/Modal";
-import Folder from "./pages/modal/Folder";
-import MyFolder from "./pages/modal/MyFolder";
-import EditFolder from "./pages/modal/EditFolder";
+import Modal from "./pages/view/Modal";
+import Folder from "./pages/view/Folder";
+import MyFolder from "./pages/view/MyFolder";
+import EditFolder from "./pages/view/EditFolder";
 import Search from "./pages/Search";
 import "./styles/App.scss";
+import AddFolder from "./pages/view/AddFolder";
 
 function App() {
   let location = useLocation();
@@ -41,6 +42,7 @@ function App() {
             <Routes>
               <Route path="/view" element={<Modal />}>
                 <Route path="public/folders/:id" element={<Folder />} />
+                <Route path="public/folders/add" element={<AddFolder />} />
                 <Route path="folders/:id" element={<MyFolder />} />
                 <Route path="folders/:id/edit" element={<EditFolder />} />
               </Route>

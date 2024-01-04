@@ -10,12 +10,12 @@ export const useInput = (initial, action) => {
 
   const HandleCancelClick = () => {
     setKeyword("");
-    // inputRef.current.blur()
   };
 
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
       action(e);
+      // inputRef.current.blur()
     }
   };
 
