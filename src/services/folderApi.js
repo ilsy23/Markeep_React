@@ -97,6 +97,23 @@ export const updateFolder = async (formData) => {
   });
 };
 
+// 폴더 핀 요청
+export const addFolderPin = async (folderId) => {
+  const res = await fetch(FOLDER + `/pin?folderId=` + folderId, {
+    method: 'POST',
+    headers: requestTokenHeader,
+  });
+
+  if (res.status === 200) {
+    const folder = await res.json(); // FolderResponseDTO
+    return folder;
+  }
+  if (res.status === 400) {
+    const message = await res.text(); // "미가입 회원입니다."
+    return message;
+  }
+};
+
 /*
 요청 모음
 

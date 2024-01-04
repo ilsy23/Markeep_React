@@ -4,6 +4,7 @@ import { ReactComponent as BookmarkIcon } from '../../assets/icons/bookmark.svg'
 import { ReactComponent as PinViewIcon } from '../../assets/icons/pin.svg';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { follow } from '../../services/followApi';
+import { addFolderPin } from '../../services/folderApi';
 
 const CardPublic = ({
   data,
@@ -16,7 +17,6 @@ const CardPublic = ({
   isFollowed,
   pin,
   toId,
-  bookmarkClickHandler,
   setClickFollow,
 }) => {
   const location = useLocation();
@@ -25,6 +25,11 @@ const CardPublic = ({
   const followClickHandler = (e) => {
     e.preventDefault();
     setClickFollow(toId);
+  };
+
+  const bookmarkClickHandler = (e) => {
+    e.preventDefault();
+    addFolderPin(id);
   };
 
   return (

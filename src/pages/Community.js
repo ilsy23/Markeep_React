@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import styles from '../styles/Community.module.scss';
 import CardPublic from '../components/folder/CardPublic';
-import { getFolders } from '../services/folderApi';
+import { addFolderPin, getFolders } from '../services/folderApi';
 import Loading from '../components/ui/Loading';
 import { follow } from '../services/followApi';
 import { useNavigate, Link } from 'react-router-dom';
 
 const Community = () => {
   const redirection = useNavigate();
-
-  const bookmarkClickHandler = () => {};
 
   //폴더 요청
   const [folderInfo, setFolderInfo] = useState();
@@ -56,7 +54,6 @@ const Community = () => {
             isFollowed={f.followFlag}
             pin={f.pinCount}
             toId={f.userId}
-            bookmarkClickHandler={bookmarkClickHandler}
             setClickFollow={setClickFollow}
           />
         ))}
