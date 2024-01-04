@@ -5,8 +5,9 @@ import { ReactComponent as Up } from "../../assets/icons/up.svg";
 import { ReactComponent as Down } from "../../assets/icons/down.svg";
 import { multiStyles, toData } from "../../styles/customStyles";
 import { useEffect, useState } from "react";
-import { getSites } from "../../services/folderApi";
 import Loading from "../../components/ui/Loading";
+import { getSites } from "../../services/siteApi";
+import SiteIcon from "../../assets/imgs/site.png";
 
 const MyFolder = () => {
   const location = useLocation();
@@ -68,7 +69,13 @@ const MyFolder = () => {
           return (
             <div key={s.id}>
               <div className={styles.site}>
-                <img src={s.url + "/favicon.ico"} alt="favicon" />
+                {
+                  <img
+                    src={s.url + "/favicon.ico"}
+                    alt="favicon"
+                    onError={(e) => (e.target.src = SiteIcon)}
+                  />
+                }
                 <div>{s.siteName}</div>
                 <div>{s.url}</div>
                 {openIdx.includes(idx) ? (

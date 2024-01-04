@@ -58,16 +58,6 @@ export async function addFolder(formData) {
   });
 }
 
-// 사이트 목록 요청
-export async function getSites(id) {
-  console.log("getSites 함수 호출!");
-
-  const res = await fetch(`${SITE}?folderId=${id}`, {
-    headers: requestTokenHeader,
-  });
-  return await res.json();
-}
-
 // 북마크 추가
 export async function addSite(folderId, title, url, comment) {
   console.log("addSite 함수 호출!");
@@ -82,6 +72,15 @@ export async function addSite(folderId, title, url, comment) {
     }),
   });
 }
+
+// 폴더 수정 요청
+export const updateFolder = async (formData) => {
+  return await fetch(FOLDER + "/my", {
+    method: "PUT",
+    headers: requestTokenHeader,
+    body: JSON.stringify(formData),
+  });
+};
 
 /*
 요청 모음
