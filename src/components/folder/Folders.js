@@ -53,6 +53,7 @@ const Folders = ({ option, keyword }) => {
                   <CardPrivate
                     key={f.id}
                     id={f.id}
+                    data={f}
                     title={f.title}
                     url={f.folderImg}
                     tags={f.tagNames}
