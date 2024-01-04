@@ -9,8 +9,8 @@ const requestHeader = {
   'content-type': 'application/json',
 };
 
-export const follow = async (userId) => {
-  const res = await fetch(FOLLOW + `?toId=` + userId, {
+export const follow = async (toId) => {
+  const res = await fetch(FOLLOW + `?toId=` + toId, {
     method: 'POST',
     headers: requestTokenHeader,
   });

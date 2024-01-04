@@ -52,6 +52,7 @@ export const AuthContextProvider = (props) => {
     localStorage.clear(); // 로컬스토리지 내용 전체 삭제
     setIsLoggedIn(false);
     redirection('/');
+    window.location.reload();
   };
 
   // 로그인 핸들러

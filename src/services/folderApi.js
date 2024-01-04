@@ -14,7 +14,8 @@ export async function getFolders(pageNo, size, keyword) {
   console.log('getFolders 함수 호출');
 
   const res = await fetch(
-    `${FOLDER}/all?page=${pageNo}&size=${size}&keyword=${keyword}`
+    `${FOLDER}/all?page=${pageNo}&size=${size}&keyword=${keyword}`,
+    { headers: requestTokenHeader }
   );
   const folders = await res.json();
   console.log('folders: ', folders);
@@ -52,11 +53,11 @@ export async function searchMyFolders(keyword) {
 
 // 폴더 등록 요청
 export async function addFolder(formData) {
-  console.log("addFolder 요청 들어옴!");
+  console.log('addFolder 요청 들어옴!');
   return await fetch(`${FOLDER}/my`, {
-    method: "POST",
+    method: 'POST',
     headers: {
-      Authorization: "Bearer " + token,
+      Authorization: 'Bearer ' + token,
     },
     body: formData,
   });

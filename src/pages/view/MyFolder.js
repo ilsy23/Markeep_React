@@ -1,4 +1,4 @@
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import styles from '../../styles/MyFolder.module.scss';
 import Select from 'react-select';
 import { ReactComponent as Up } from '../../assets/icons/up.svg';
@@ -12,7 +12,7 @@ const MyFolder = () => {
   const location = useLocation();
   const previousLocation = location.state.previousLocation;
   const folder = location.state.data;
-
+  const navigate = useNavigate();
   // 태그를 Select 객체로 변환
   const [openIdx, setOpenIdx] = useState([]);
   const { id, folderImg: url, title, tagNames: tags } = folder;
@@ -21,7 +21,11 @@ const MyFolder = () => {
   // 사이트 목록 요청
   const [sites, setSites] = useState();
   useEffect(() => {
-    getSites(id).then((res) => setSites(res));
+    getSites(id)
+      .then((res) => setSites(res))
+      .then(() => {
+        navigate(-1);
+      });
   }, [id]);
 
   if (!sites) {
@@ -58,7 +62,7 @@ const MyFolder = () => {
           isClearable={false}
           openMenuOnFocus={false}
           openMenuOnClick={false}
-          placeholder={"No Tags..."}
+          placeholder={'No Tags...'}
           components={{
             DropdownIndicator: () => null,
             IndicatorSeparator: () => null,

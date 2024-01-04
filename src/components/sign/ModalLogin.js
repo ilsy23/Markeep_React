@@ -84,7 +84,7 @@ const ModalLogin = ({
     onLogin(accessToken, refreshToken);
 
     // 홈으로 리다이렉트
-    redirection('/');
+    window.location.reload();
   };
 
   // 로그인 요청 핸들러
