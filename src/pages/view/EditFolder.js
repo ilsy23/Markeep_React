@@ -17,11 +17,13 @@ import {
 } from "../../styles/customStyles";
 import Select from "react-select";
 import { useInput } from "../../hoc/useInput";
-import { deleteSite } from "../../services/siteApi";
+import { deleteSite, updateSite } from "../../services/siteApi";
 import { updateFolder } from "../../services/folderApi";
-import { FormControlLabel, FormGroup, Switch } from "@mui/material";
+import { FormControlLabel, FormGroup, Switch, TextField } from "@mui/material";
 
 const EditFolder = () => {
+  const navigate = useNavigate();
+
   // Link에서 데이터 받아오기
   const { folder, sites } = useLocation().state.data;
   const { id, folderImg: url, title, tagNames: tags, hideFlag } = folder;
@@ -131,47 +133,19 @@ const EditFolder = () => {
 
   const initialSiteState = {
     title: "",
-    url: "",
-    titleMsg: "",
-    urlMsg: "",
+    comment: "",
   };
 
   const [current, setCurrent] = useState(initialSiteState);
 
   const siteRef = useRef();
-  const urlRef = useRef();
 
   const handleSiteInputChange = (e) => {
-    const { name, value } = e.target;
-    setCurrent((prev) => ({ ...prev, [name]: value }));
+    const { id, value } = e.target;
+    setCurrent((prev) => ({ ...prev, [id]: value }));
   };
 
-  // url 유효성 관리
-  const [isValidUrl, setIsValidUrl] = useState(false);
-
-  const handleUrlKeyUp = (e) => {
-    const urlRegex =
-      /^(https?|ftp):\/\/(([a-z\d]([a-z\d-]*[a-z\d])?\.)+[a-z]{2,}|localhost)(\/[-a-z\d%_.~+]*)*(\?[;&a-z\d%_.~+=-]*)?(\#[-a-z\d_]*)?$/i;
-
-    if (!urlRegex.test(e.target.value)) {
-      setCurrent((prev) => ({
-        ...prev,
-        urlMsg: "url 형식을 다시 확인해 주세요",
-      }));
-      setIsValidUrl(false);
-      return;
-    }
-    setCurrent((prev) => ({ ...prev, urlMsg: "" }));
-    setIsValidUrl(true);
-  };
-
-  const handleUrlBlur = () => {
-    if (!isValidUrl) {
-      urlRef.current.focus();
-    }
-  };
-
-  const redirection = useNavigate();
+  console.log(current);
 
   // 사이트 삭제
   const handleDeleteSiteClick = (e) => {
@@ -180,17 +154,43 @@ const EditFolder = () => {
     deleteSite(id, e.currentTarget.id).then((res) => {
       if (res.status !== 200) {
         alert("북마크 삭제에 실패했습니다. 다시 시도해 주세요.");
+        handleCancelSaveClick();
       }
       alert("북마크가 정상적으로 삭제되었습니다.");
-      redirection("/mypage");
+      navigate(-1);
     });
   };
 
   // 사이트 변경사항 저장 요청
-  const handleSaveSiteClick = (e) => {};
+  const handleSaveSiteClick = (e) => {
+    const { title, comment } = current;
+
+    const updateData = {
+      folderId: id,
+      siteId: e.currentTarget.id,
+    };
+
+    if (title) {
+      updateData.siteName = title;
+    }
+
+    if (comment) {
+      updateData.comment = comment;
+    }
+
+    updateSite(updateData).then((res) => {
+      if (res.status === 200) {
+        alert("변경사항이 저장되었습니다.");
+        handleCancelSaveClick();
+        return;
+      }
+      alert("변경사항 저장에 실패했습니다. 다시 시도해 주세요.");
+      handleCancelSaveClick();
+    });
+  };
 
   // 사이트 변경 취소
-  const handleCancelSaveClick = (e) => {
+  const handleCancelSaveClick = () => {
     setCurrent(initialSiteState);
     setModify("");
   };
@@ -322,6 +322,7 @@ const EditFolder = () => {
                           placeholder={s.siteName}
                           onChange={handleSiteInputChange}
                           value={current.title}
+                          defaultValue={s.siteName}
                           ref={siteRef}
                         />
                         {current.title ? (
@@ -334,26 +335,17 @@ const EditFolder = () => {
                         <div className={styles.msg}>{current.titleMsg}</div>
                       </div>
                       {/* url */}
+                      <div>{s.url}</div>
+                      {/* 코멘트 */}
                       <div className={styles.input_box}>
-                        <label htmlFor="url">주소</label>
-                        <input
-                          id="url"
-                          name="url"
-                          placeholder={s.url}
+                        <TextField
+                          id="comment"
+                          label="Comment"
+                          multiline
+                          rows={4}
+                          defaultValue={s.comment}
                           onChange={handleSiteInputChange}
-                          value={current.url}
-                          ref={urlRef}
-                          onKeyUp={handleUrlKeyUp}
-                          onBlur={handleUrlBlur}
                         />
-                        {current.title ? (
-                          <Cancel
-                            className={styles.icon}
-                            id="tag"
-                            onClick={handleCancleClick}
-                          />
-                        ) : null}
-                        <div className={styles.msg}>{current.urlMsg}</div>
                       </div>
                     </div>
                   )}

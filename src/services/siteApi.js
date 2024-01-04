@@ -29,3 +29,14 @@ export async function deleteSite(folderId, siteId) {
     body: JSON.stringify({ folderId: folderId, siteId: siteId }),
   });
 }
+
+// 사이트 저장 요청
+export async function updateSite(updateData) {
+  console.log("updateSite 함수 호출!");
+
+  return await fetch(`${SITE}`, {
+    method: "PATCH",
+    headers: requestTokenHeader,
+    body: JSON.stringify(updateData),
+  });
+}
