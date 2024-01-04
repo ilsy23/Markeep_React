@@ -104,14 +104,14 @@ const AddFolder = () => {
             onChange={handleChange}
             ref={titleRef}
           />
-          {title ? (
+          {title && (
             <div className={styles.cancel} onClick={HandleCancelClick}>
               <Cancel className={styles.icon} />
             </div>
-          ) : null}
+          )}
         </Input>
       </div>
-      {/* 체크박스 */}
+      {/* 프라이빗 토글 */}
       <FormGroup>
         <FormControlLabel
           control={<Switch />}
@@ -119,7 +119,6 @@ const AddFolder = () => {
           onChange={handleToggleChange}
         />
       </FormGroup>
-      <label htmlFor="isPrivate">private</label>
       {/* 태그 */}
       <div className={styles.tag_box}>
         <div className={styles.input_box}>

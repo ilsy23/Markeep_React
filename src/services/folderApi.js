@@ -88,6 +88,15 @@ export async function addSite(folderId, title, url, comment) {
   });
 }
 
+// 폴더 수정 요청
+export const updateFolder = async (formData) => {
+  return await fetch(FOLDER + '/my', {
+    method: 'PUT',
+    headers: requestTokenHeader,
+    body: JSON.stringify(formData),
+  });
+};
+
 /*
 요청 모음
 
