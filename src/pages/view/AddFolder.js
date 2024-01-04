@@ -7,16 +7,21 @@ import Select from "react-select";
 import { multiStyles, toData } from "../../styles/customStyles";
 import { FormControlLabel, FormGroup, Switch } from "@mui/material";
 import { addFolder } from "../../services/folderApi";
+import { useNavigate } from "react-router-dom";
 
 const AddFolder = () => {
-  // 폼 데이터
-  const [formData, setFormData] = useState({
+  const navigate = useNavigate();
+
+  const initialState = {
     title: "",
     image: null,
     tag: "",
     tags: [],
     isPrivate: false,
-  });
+  };
+
+  // 폼 데이터
+  const [formData, setFormData] = useState(initialState);
   const [src, setSrc] = useState();
   const titleRef = useRef();
   const tagRef = useRef();
@@ -84,7 +89,19 @@ const AddFolder = () => {
     folderFormData.append("dto", blob);
     folderFormData.append("folderImage", image);
     try {
-      addFolder(folderFormData).then((res) => console.log(res.status));
+      addFolder(folderFormData).then((res) => {
+        if (res.status === 200) {
+          alert("폴더가 정상적으로 등록되었습니다.");
+          setFormData(initialState);
+          setSrc();
+          navigate("/mypage");
+          return;
+        }
+        alert("폴더 생성에 실패했습니다. 다시 시도해 주세요.");
+        setFormData(initialState);
+        setSrc();
+        navigate("/mypage");
+      });
     } catch (e) {
       console.log(e);
     }
@@ -99,7 +116,7 @@ const AddFolder = () => {
             id="title"
             type="text"
             name="title"
-            placeholder="북마크 이름"
+            placeholder="폴더 이름"
             value={title}
             onChange={handleChange}
             ref={titleRef}
