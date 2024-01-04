@@ -6,12 +6,15 @@ import Folders from '../components/folder/Folders';
 import Select from 'react-select';
 import { colors, customStyles } from '../styles/customStyles';
 import { useInput } from '../hoc/useInput';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { deleteFolder } from '../services/folderApi';
 
 const MyPage = () => {
   const [search, setSearch] = useState('');
   const [option, setOption] = useState('all');
+  const [checked, setChecked] = useState([]);
   const location = useLocation();
+  const navigate = useNavigate();
 
   // 검색
   const handleClick = () => {
@@ -36,6 +39,21 @@ const MyPage = () => {
 
   const handleSelectChange = (e) => {
     setOption(e?.value);
+  };
+
+  // 폴더 삭제
+  const handleCancleClick = (e) => {
+    console.log('잘 왔나 확인', checked);
+    deleteFolder(checked).then((res) => {
+      if (res.status === 200) {
+        alert('폴더가 삭제되었습니다.');
+        setChecked([]);
+        navigate('/mypage');
+        return;
+      }
+      alert('폴더 삭제에 실패했습니다. 다시 시도해 주세요.');
+      setChecked([]);
+    });
   };
 
   return (
@@ -73,7 +91,7 @@ const MyPage = () => {
             >
               추가
             </Link>
-            <button>삭제</button>
+            <button onClick={handleCancleClick}>삭제</button>
           </div>
           <Select
             id='select'
@@ -100,6 +118,7 @@ const MyPage = () => {
         <Folders
           option={option}
           keyword={search}
+          setChecked={setChecked}
         />
       </div>
     </div>
