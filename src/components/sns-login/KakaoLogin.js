@@ -6,7 +6,7 @@ import { USER } from '../../config/host-config';
 const KakaoLogin = () => {
   const code = new URL(window.location.href).searchParams.get('code');
   const { onLogin } = useContext(AuthContext);
-  //   const navigate = useNavigate();
+  const navigate = useNavigate();
   const API_REQUEST_URL = USER + '/kakao-login?code=' + code;
 
   useEffect(() => {
@@ -19,8 +19,9 @@ const KakaoLogin = () => {
       const { accessToken, refreshToken } = await res.json();
       onLogin(accessToken, refreshToken);
     };
+
     kakaoLogin();
-    // redirection('/');
+    navigate('/');
   }, []);
 
   return <div>KakaoLogin</div>;

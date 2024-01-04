@@ -11,6 +11,7 @@ const CardPublic = ({
   writer,
   isFollowed,
   pin,
+  toId,
   bookmarkClickHandler,
   followClickHandler,
 }) => {
@@ -18,7 +19,10 @@ const CardPublic = ({
     <div className={styles.wrap}>
       <div className={styles.img_box}>
         <img
-          src={image}
+          src={
+            image ||
+            require('/MyWork/Markeep_React/src/assets/imgs/defaultFolderImg.jpg')
+          }
           alt='폴더 이미지'
         />
         <div className={styles.hover}>
@@ -42,7 +46,7 @@ const CardPublic = ({
           <span>{writer}</span>
           <button
             className={isFollowed && styles.followed}
-            onClick={followClickHandler}
+            onClick={followClickHandler(toId)}
           >
             {isFollowed ? 'Following' : 'Follow'}
           </button>

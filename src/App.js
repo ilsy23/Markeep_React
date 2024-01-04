@@ -13,6 +13,7 @@ import Search from './pages/Search';
 import './styles/App.scss';
 import AddFolder from './pages/view/AddFolder';
 import KakaoLogin from './components/sns-login/KakaoLogin';
+import NaverLogin from './components/sns-login/NaverLogin';
 
 function App() {
   let location = useLocation();
@@ -49,6 +50,10 @@ function App() {
             <Route
               path='/oauth/redirected/kakao'
               element={<KakaoLogin />}
+            />
+            <Route
+              path='/oauth/naver'
+              element={<NaverLogin />}
             />
           </Routes>
 

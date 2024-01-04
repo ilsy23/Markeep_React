@@ -301,7 +301,7 @@ const ModalLogin = ({
             className='sns-login-icon'
           />
         </a>
-        <GoogleLoginBtn />
+        {/* <GoogleLoginBtn /> */}
       </Box>
     </div>
   );

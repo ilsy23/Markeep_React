@@ -635,7 +635,7 @@ const ModalJoin = ({ setValue, handleClose }) => {
             className='sns-login-icon'
           />
         </a>
-        <GoogleLoginBtn />
+        {/* <GoogleLoginBtn /> */}
       </Box>
     </div>
   );

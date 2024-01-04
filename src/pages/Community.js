@@ -3,10 +3,16 @@ import styles from '../styles/Community.module.scss';
 import CardPublic from '../components/folder/CardPublic';
 import { getFolders } from '../services/folderApi';
 import Loading from '../components/ui/Loading';
+import { follow } from '../services/followApi';
+import { useNavigate } from 'react-router-dom';
 
 const Community = () => {
+  const redirection = useNavigate();
   const bookmarkClickHandler = () => {};
-  const followClickHandler = () => {};
+  const followClickHandler = (userId) => {
+    follow(userId);
+    // redirection('/');
+  };
 
   // 폴더리스트 불러와서 map함수 써서 CardPublic 안에 속성으로 값 넣어주시면 돼요.
   // CardPublic에 값 넣는 예시는 아래 return문쪽에 CardPublic 컴포넌트 보시면 돼요!
@@ -61,6 +67,7 @@ const Community = () => {
             isMarked={f.pinFlag}
             isFollowed={f.followFlag}
             pin={f.pinCount}
+            toId={f.userId}
             bookmarkClickHandler={bookmarkClickHandler}
             followClickHandler={followClickHandler}
           />
