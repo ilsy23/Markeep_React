@@ -58,6 +58,16 @@ export async function addFolder(formData) {
   });
 }
 
+// 폴더 삭제
+export async function deleteFolder(folderIds) {
+  console.log("deleteFolder 요청 들어옴");
+  return await fetch(`${FOLDER}/my`, {
+    method: "DELETE",
+    headers: requestTokenHeader,
+    body: JSON.stringify({ ids: folderIds }),
+  });
+}
+
 // 북마크 추가
 export async function addSite(folderId, title, url, comment) {
   console.log("addSite 함수 호출!");

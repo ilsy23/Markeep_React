@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import { FOLDER, SITE, USER } from "../config/host-config";
 
 const token = localStorage.getItem("ACCESS_TOKEN");
@@ -16,6 +17,9 @@ export async function getSites(id) {
   const res = await fetch(`${SITE}?folderId=${id}`, {
     headers: requestTokenHeader,
   });
+  if (res.status !== 200) {
+    throw new Error();
+  }
   return await res.json();
 }
 

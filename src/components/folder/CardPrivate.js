@@ -1,8 +1,14 @@
 import styles from "../../styles/CardPrivate.module.scss";
 import { Link, useLocation } from "react-router-dom";
 
-const CardPrivate = ({ id, data, url, title, tags }) => {
+const CardPrivate = ({ id, data, url, title, tags, setChecked }) => {
   const location = useLocation();
+
+  const handleCheckClick = (e) => {
+    if (e.target.checked) {
+      setChecked((prev) => [...prev, e.target.value]);
+    }
+  };
 
   return (
     <div>
@@ -26,7 +32,12 @@ const CardPrivate = ({ id, data, url, title, tags }) => {
           </div>
         </Link>
         <div className={styles.check}>
-          <input className={styles.check_item} type="checkbox" value={id} />
+          <input
+            className={styles.check_item}
+            type="checkbox"
+            value={id}
+            onClick={handleCheckClick}
+          />
         </div>
       </div>
     </div>

@@ -4,7 +4,7 @@ import { getMyFolders, searchMyFolders } from "../../services/folderApi";
 import CardPrivate from "./CardPrivate";
 import Loading from "../ui/Loading";
 
-const Folders = ({ option, keyword }) => {
+const Folders = ({ option, keyword, setChecked }) => {
   const [folders, setFolders] = useState();
 
   useEffect(() => {
@@ -36,6 +36,7 @@ const Folders = ({ option, keyword }) => {
                     title={f.title}
                     url={f.folderImg}
                     tags={f.tagNames}
+                    setChecked={setChecked}
                   />
                 );
               })}
@@ -57,6 +58,7 @@ const Folders = ({ option, keyword }) => {
                     title={f.title}
                     url={f.folderImg}
                     tags={f.tagNames}
+                    setChecked={setChecked}
                   />
                 );
               })}

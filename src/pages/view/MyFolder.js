@@ -13,7 +13,6 @@ const MyFolder = () => {
   const location = useLocation();
   const previousLocation = location.state.previousLocation;
   const folder = location.state.data;
-  console.log("id가 없다구?", folder);
 
   // 태그를 Select 객체로 변환
   const [openIdx, setOpenIdx] = useState([]);
