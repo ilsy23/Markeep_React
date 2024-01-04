@@ -50,6 +50,18 @@ export async function searchMyFolders(keyword) {
   return await folders.list;
 }
 
+// 폴더 등록 요청
+export async function addFolder(formData) {
+  console.log("addFolder 요청 들어옴!");
+  return await fetch(`${FOLDER}/my`, {
+    method: "POST",
+    headers: {
+      Authorization: "Bearer " + token,
+    },
+    body: formData,
+  });
+}
+
 // 사이트 목록 요청
 export async function getSites(id) {
   console.log('getSites 함수 호출!');

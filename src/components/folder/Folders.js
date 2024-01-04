@@ -18,7 +18,6 @@ const Folders = ({ option, keyword }) => {
   if (!folders) {
     return <Loading />;
   }
-  console.log('folders: ', folders);
 
   return (
     <div className={styles.wrap}>

@@ -1,0 +1,46 @@
+@import "variables", "mixin";
+
+.wrap {
+  .title {
+    input {
+      font-size: 14px;
+      margin-top: 1px;
+      border: 2px solid $blue04;
+      border-radius: 4px;
+      font-family: "Noto-l";
+      background: $black;
+
+      &::placeholder {
+        color: $blue;
+        opacity: 0.4;
+      }
+
+      &:hover,
+      &:focus {
+        @include border($s: $salmon, $e: $purple);
+      }
+    }
+  }
+  .tag_box {
+    .input_box {
+      input {
+        font-size: 14px;
+        margin-top: 1px;
+        border: 2px solid $blue04;
+        border-radius: 4px;
+        font-family: "Noto-l";
+        background: $black;
+
+        &::placeholder {
+          color: $blue;
+          opacity: 0.4;
+        }
+
+        &:hover,
+        &:focus {
+          @include border($s: $salmon, $e: $purple);
+        }
+      }
+    }
+  }
+}
