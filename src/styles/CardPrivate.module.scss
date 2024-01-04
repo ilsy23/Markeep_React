@@ -3,11 +3,11 @@
 .wrap {
   box-sizing: border-box;
   width: 100%;
-  border: 1px solid purple;
-  display: flex;
+  @include border();
+  height: 200px;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  align-content: flex-start;
   position: relative;
 
   a {
@@ -20,6 +20,7 @@
     width: 100%;
     font-weight: 500;
     font-size: 16px;
+    margin-top: 4px;
   }
 
   .image_box {
