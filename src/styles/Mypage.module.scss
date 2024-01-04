@@ -1,14 +1,12 @@
 @import "variables", "mixin";
 
 .wrap {
-  //   border: 1px solid white;
   width: 80%;
   display: flex;
   flex-direction: column;
 
   .header {
-    // border: 1px solid wheat;
-
+    padding-bottom: 10px;
     h2 {
       //   text-align: center;
       font: {
@@ -23,10 +21,110 @@
       background-clip: text;
       color: transparent;
     }
+
+    .box {
+      display: flex;
+      align-items: center;
+      box-sizing: border-box;
+      justify-content: space-between;
+
+      .select {
+        width: 120px;
+      }
+
+      .input_box {
+        position: relative;
+        flex: 1 0 auto;
+        height: 32px;
+        box-sizing: border-box;
+        align-items: center;
+
+        &:hover {
+          border-color: $blue;
+        }
+
+        input {
+          position: relative;
+          font-size: 14px;
+          margin-top: 0px;
+          width: 90%;
+          height: 35px;
+          bottom: 3px;
+          border: 2px solid $blue04;
+          border-radius: 4px;
+          font-family: "Noto-l";
+          background: $black;
+          margin-left: 16px;
+
+          &::placeholder {
+            color: $blue;
+            opacity: 0.4;
+          }
+
+          &:hover,
+          &:focus {
+            @include border($s: $salmon, $e: $purple);
+          }
+        }
+
+        .icon {
+          position: absolute;
+          top: 5px;
+          right: 10%;
+
+          @include icon($size: 24px);
+
+          &:hover {
+            @include hover();
+          }
+        }
+      }
+
+      .buttons {
+        display: flex;
+        font-size: 14px;
+        gap: 8px;
+        height: 30px;
+        .link {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background-color: $blue04;
+          padding: 2px 8px 2px 8px;
+          border-radius: 2px;
+
+          a {
+            text-decoration: none;
+            color: $blue;
+          }
+
+          &:hover {
+            @include hover();
+            filter: contrast(1.3);
+            color: $purple;
+          }
+        }
+
+        button {
+          @include btn($blue04, 14px $blue);
+          border-radius: 2px;
+          margin-left: 4px;
+
+          &.followed {
+            background: $grad-bp;
+          }
+
+          &:hover {
+            @include hover();
+            filter: contrast(1.3);
+            color: $purple;
+          }
+        }
+      }
+    }
   }
 
   .content {
-    border: 1px solid salmon;
     display: flex;
     overflow-x: hidden;
     overflow-y: auto;
