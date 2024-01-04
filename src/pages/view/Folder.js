@@ -8,7 +8,7 @@ import Loading from "../../components/ui/Loading";
 import SiteIcon from "../../assets/imgs/site.png";
 import { ReactComponent as Up } from "../../assets/icons/up.svg";
 import { ReactComponent as Down } from "../../assets/icons/down.svg";
-
+import ProfileIcon from "../../assets/imgs/defaultProfileImg.jpg";
 const Folder = () => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -76,7 +76,7 @@ const Folder = () => {
         <div className={styles.user}>
           <div className={styles.group}>
             <div className={styles.image_box}>
-              <img src={profileImage} alt="프로필 이미지" />
+              <img src={profileImage || ProfileIcon} alt="프로필 이미지" />
             </div>
             <div className={styles.nickname}>{nickname}</div>
             <button
@@ -87,58 +87,59 @@ const Folder = () => {
             </button>
           </div>
           <div className={styles.group}>
+            {pinCount}
             <div className={styles.icon_box}>
               <PinViewIcon className={styles.icon} />
             </div>
-            {pinCount}
             <button
               className={pinFlag && styles.followed}
               onClick={handlePinClick}
             >
-              {pinFlag ? "Following" : "Follow"}
+              {pinFlag ? "Saved" : "Pin"}
             </button>
           </div>
-          <div className={styles.image_box}>
-            <img src={folderImg} alt="폴더 이미지" />
-          </div>
-          <div className={styles.site_box}>
-            <ul>
-              {sites.map((s, idx) => {
-                return (
-                  <div key={s.id}>
-                    <div className={styles.site}>
-                      {
-                        <img
-                          src={s.url + "/favicon.ico"}
-                          alt="favicon"
-                          onError={(e) => (e.target.src = SiteIcon)}
-                        />
-                      }
-                      <div>{s.siteName}</div>
-                      <div>{s.url}</div>
-                      {openIdx.includes(idx) ? (
-                        <Up
-                          id={idx}
-                          className={styles.icon}
-                          onClick={clickUpHandler}
-                        />
-                      ) : (
-                        <Down
-                          id={idx}
-                          className={styles.icon}
-                          onClick={clickDownHandler}
-                        />
-                      )}
-                    </div>
-                    {openIdx.includes(idx) && (
-                      <div className={styles.comment}>{s.comment}</div>
-                    )}
-                  </div>
-                );
-              })}
-            </ul>
-          </div>
         </div>
+      </div>
+
+      <div className={styles.image_box}>
+        <img src={folderImg} alt="폴더 이미지" />
+      </div>
+      <div className={styles.site_box}>
+        <ul>
+          {sites.map((s, idx) => {
+            return (
+              <div key={s.id}>
+                <div className={styles.site}>
+                  {
+                    <img
+                      src={s.url + "/favicon.ico"}
+                      alt="favicon"
+                      onError={(e) => (e.target.src = SiteIcon)}
+                    />
+                  }
+                  <div>{s.siteName}</div>
+                  <div className={styles.url}>{s.url}</div>
+                  {openIdx.includes(idx) ? (
+                    <Up
+                      id={idx}
+                      className={styles.icon}
+                      onClick={clickUpHandler}
+                    />
+                  ) : (
+                    <Down
+                      id={idx}
+                      className={styles.icon}
+                      onClick={clickDownHandler}
+                    />
+                  )}
+                </div>
+                {openIdx.includes(idx) && (
+                  <div className={styles.comment}>{s.comment}</div>
+                )}
+              </div>
+            );
+          })}
+        </ul>
       </div>
     </div>
   );
