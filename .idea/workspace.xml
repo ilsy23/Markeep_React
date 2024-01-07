@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="716ed6ed-c9ff-4545-b150-ffa1b39643c1" name="변경" comment="">
+      <change afterPath="$PROJECT_DIR$/src/assets/img/google_icon.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/img/kakao.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/img/naver_icon.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/ModalEmail.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/ModalJoin.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/ModalLogin.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Header.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Header.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Header.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Header.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/SignModal.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/SignModal.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/SignModal.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/SignModal.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/login/NaverLogin.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/login/NaverLogin.js" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 0
+}]]></component>
+  <component name="ProjectId" id="2a2X5jK5U440wHDou0gTbvW2GoC" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "Jun 병합 중",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/MyWork/Markeep_React"
+  }
+}]]></component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="jdk-11.0.21-corretto-11.0.21-8336523bb0d9-d3b62f98" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="애플리케이션 수준" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="디폴트 작업">
+      <changelist id="716ed6ed-c9ff-4545-b150-ffa1b39643c1" name="변경" comment="" />
+      <created>1703517466875</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1703517466875</updated>
+    </task>
+    <servers />
+  </component>
+</project>
