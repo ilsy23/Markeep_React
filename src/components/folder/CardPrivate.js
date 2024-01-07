@@ -1,5 +1,7 @@
+import { Select } from '@mui/material';
 import styles from '../../styles/CardPrivate.module.scss';
 import { Link, useLocation } from 'react-router-dom';
+import { multiStyles } from '../../styles/customStyles';
 
 const CardPrivate = ({ id, data, url, title, tags, setChecked }) => {
   const location = useLocation();
@@ -25,6 +27,21 @@ const CardPrivate = ({ id, data, url, title, tags, setChecked }) => {
           </div>
           <h4>{title}</h4>
           <div className={styles.tag_box}>
+            <Select
+              defaultValue={tags}
+              isMulti
+              styles={multiStyles(tags)}
+              isSearchable={false}
+              isClearable={false}
+              openMenuOnFocus={false}
+              openMenuOnClick={false}
+              placeholder={'No Tags...'}
+              components={{
+                DropdownIndicator: () => null,
+                IndicatorSeparator: () => null,
+                MultiValueRemove: () => null,
+              }}
+            />
             {tags.map((tag, idx) => {
               return (
                 <div

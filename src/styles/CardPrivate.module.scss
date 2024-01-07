@@ -1,4 +1,4 @@
-@import "variables", "mixin";
+@import 'variables', 'mixin';
 
 .wrap {
   box-sizing: border-box;
@@ -24,7 +24,8 @@
   }
 
   .image_box {
-    width: 100%;
+    width: 100px;
+    height: 100px;
     aspect-ratio: 3 / 2;
     overflow: hidden;
 
