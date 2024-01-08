@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from 'react';
 import styles from '../styles/Community.module.scss';
 import CardPublic from '../components/folder/CardPublic';
 import Loading from '../components/ui/Loading';
@@ -7,12 +6,15 @@ import { getFolders } from '../services/folderApi';
 import ErrorPage from '../components/ui/ErrorPage';
 
 const Community = () => {
+  const pageNo = 1;
+  const size = 20;
+  const keyword = '';
+
   const { isLoading, isError, error, data } = useQuery({
     queryKey: ['folders'],
-    queryFn: () => {
-      return getFolders(1, 20, '');
-    },
+    queryFn: () => getFolders(pageNo, size, keyword),
   });
+
   if (isLoading) return <Loading />;
   if (isError) return <ErrorPage>{error}</ErrorPage>;
   const { list } = data;

@@ -6,15 +6,14 @@ import Loading from '../ui/Loading';
 import { useQuery } from '@tanstack/react-query';
 import ErrorPage from '../ui/ErrorPage';
 
-const Folders = ({ option, keyword, setChecked }) => {
-  console.log('keyword: ', keyword);
-
+const Folders = ({ option, searched, setChecked }) => {
   const { isLoading, isError, error, data } = useQuery({
     queryKey: ['myFolders'],
     queryFn: () => {
       return getMyFolders();
     },
   });
+
   if (isLoading) return <Loading />;
   if (isError) return <ErrorPage>{error}</ErrorPage>;
 
@@ -24,7 +23,7 @@ const Folders = ({ option, keyword, setChecked }) => {
         <div className={styles.group}>
           <h3>Public Folders</h3>
           <div className={styles.folders}>
-            {data
+            {(searched || data)
               .filter((f) => !f.hideFlag)
               .map((f) => {
                 return (

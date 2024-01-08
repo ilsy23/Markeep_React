@@ -9,6 +9,8 @@ import { useInput } from '../hoc/useInput';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { deleteFolder, searchMyFolders } from '../services/folderApi';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import Loading from '../components/ui/Loading';
+import ErrorPage from '../components/ui/ErrorPage';
 
 const MyPage = () => {
   const [search, setSearch] = useState('');
@@ -29,9 +31,22 @@ const MyPage = () => {
     },
   });
 
+  const {
+    isLoading,
+    isError,
+    error,
+    data: searched,
+    refetch,
+  } = useQuery({
+    queryKey: ['searchedMy'],
+    queryFn: () => searchMyFolders(keyword),
+    enabled: false,
+  });
+
   // 검색
   const handleClick = () => {
     setSearch(keyword);
+    refetch();
     inputRef.current.blur();
   };
 
@@ -42,6 +57,9 @@ const MyPage = () => {
     HandleCancelClick,
     handleKeyDown,
   } = useInput('', handleClick);
+
+  if (isLoading) return <Loading />;
+  if (isError) return <ErrorPage>{error}</ErrorPage>;
 
   // 폴더 분류
   const options = [
@@ -124,7 +142,7 @@ const MyPage = () => {
       <div className={styles.content}>
         <Folders
           option={option}
-          keyword={search}
+          searched={searched}
           setChecked={setChecked}
         />
       </div>
