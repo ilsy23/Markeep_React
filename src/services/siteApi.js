@@ -32,9 +32,7 @@ export async function deleteSite(folderId, siteId) {
   console.log('deleteSite 함수 호출!');
 
   try {
-    const res = api.delete({
-      data: { folderId: folderId, siteId: siteId },
-    });
+    const res = api.delete('', { folderId: folderId, siteId: siteId });
     return res.data;
   } catch (e) {
     console.error(e);
@@ -46,9 +44,7 @@ export async function updateSite(updateData) {
   console.log('updateSite 함수 호출!');
 
   try {
-    const res = await api.patch({
-      data: updateData,
-    });
+    const res = await api.patch('', updateData);
     return res.data;
   } catch (e) {
     console.error(e);
@@ -60,13 +56,11 @@ export async function addSite(folderId, title, url, comment) {
   console.log('addSite 함수 호출!');
 
   try {
-    const res = await api.post({
-      data: {
-        folderId: folderId,
-        siteName: title,
-        url: url,
-        comment: comment,
-      },
+    const res = await api.post('', {
+      folderId: folderId,
+      siteName: title,
+      url: url,
+      comment: comment,
     });
     return res.data;
   } catch (e) {

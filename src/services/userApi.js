@@ -30,7 +30,7 @@ export async function updateProfile(file) {
   formData.append('profileImage', file);
 
   try {
-    const res = await axios.post('/profile', formData, {
+    const res = await axios.post(USER + '/profile', formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
         Authorization: 'Bearer ' + token,
@@ -42,6 +42,7 @@ export async function updateProfile(file) {
   }
 }
 
+// 닉네임 수정 요청
 export async function updateNickname(newNickname) {
   console.log('updateNickname 요청 들어옴');
 

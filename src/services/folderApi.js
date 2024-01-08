@@ -64,9 +64,9 @@ export async function addFolder(formData) {
   console.log('addFolder 요청 들어옴!');
 
   try {
-    const res = await axios.post('/my', formData, {
+    const res = await axios.post(FOLDER + '/my', formData, {
       headers: {
-        'Content-Type': 'multipart/form-data',
+        // 'Content-Type': 'multipart/form-data',
         Authorization: 'Bearer ' + token,
       },
     });
@@ -81,10 +81,9 @@ export async function deleteFolder(folderIds) {
   console.log('deleteFolder 요청 들어옴');
 
   try {
-    const res = api.delete('/my', {
-      data: { id: folderIds },
-    });
-    return res.data;
+    const res = api.delete('/my/ids', { data: { ids: folderIds } });
+    // return res.data;
+    return res;
   } catch (e) {
     console.error(e);
   }
@@ -95,7 +94,7 @@ export const updateFolder = async (formData) => {
   console.log('updateFolder 요청 들어옴!');
 
   try {
-    const res = await axios.put('/my', formData, {
+    const res = await axios.put(FOLDER + '/my', formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
         Authorization: 'Bearer ' + token,
